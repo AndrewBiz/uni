@@ -1,0 +1,30 @@
+---
+#Moscow - home
+home:
+  :gps_created:
+    :gps_latitude: "55 36 31.49"
+    :gps_latitude_ref: N
+    :gps_longitude: "37 43 28.27"
+    :gps_longitude_ref: E
+    :gps_altitude: "170.0"
+    :gps_altitude_ref: "Above Sea Level"
+
+#Vientam - Saigon
+saigon:
+  :gps_created:
+    :gps_latitude: "10 49 08.13"
+    :gps_latitude_ref: N
+    :gps_longitude: "106 39 19.26"
+    :gps_longitude_ref: E
+    :gps_altitude: "20.0"
+    :gps_altitude_ref: "Above Sea Level"
+
+#Vientam - Mui Ne - Nam Hai Hotel
+namhai:
+  :gps_created:
+    :gps_latitude: "10 56 32.84"
+    :gps_latitude_ref: N
+    :gps_longitude: "108 11 31.67"
+    :gps_longitude_ref: E
+    :gps_altitude: "20.0"
+    :gps_altitude_ref: "Above Sea Level"

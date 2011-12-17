@@ -1,0 +1,37 @@
+---
+:input_parameter:
+  :foto_ext: [jpg] #foto extentions  
+  :dir_target: "_result" # OPTIONAL result folder (in Win32 only ASCII allowed!)
+  :dir_backup: "_backup" # OPTIONAL folder for back up files before processing (in Win32 only ASCII allowed!) 
+  #:dir_tmp: "_tmp" # OPTIONAL tmp folder for processing (in Win32 only ASCII allowed!) 
+
+:metadata:  
+# **** Информация будет внесена в EXIF теги фотографий:
+  :date2set: "2005-08-13 09:00:00+0400" #YYYY-mm-dd HH:MM:SS[.ss][+/-HHMM]
+  :delta: 7 # minutes netween fotos
+
+# Автор фотографий
+  :author_nikname: "DACHA" #used in file name
+  :creator: ["Andrey Bizyaev (photographer)", "Andrey Bizyaev (camera owner)"] # MWG:Creator
+  :copyright: "(c) Copyright 2011 Andrey Bizyaev. All Rights Reserved." # MWG:Copyright 
+# Ключевые слова 
+# Желательно ответить на вопросы: Что, Кто, Где, Когда, Почему 
+  :keywords: ["дача", "Фенино"] # MWG:Keywords (iPhoto Ok)
+
+# Место создания снимка
+  :location_created:
+    :world_region: "Europe" # TODO
+    :country: "Russia" # MWG:Country Страна
+    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state: "Московская область" # MWG:State  Регион, область
+    :city: "Серпухов" # MWG:City  Город
+    :location: "Фенино" # MWG:Location - Район, местность
+
+# Координаты места создания снимка
+  :gps_created:
+    :gps_latitude: "55 00 45.43" #GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: " 37 28 21.21" #GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "177.0" #GPSAltitude
+    :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
