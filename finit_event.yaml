@@ -10,6 +10,7 @@
 :event:
   :title: "Дома 1е кадры Sony SLT-A65V" # Место Краткое название события (mwg_coll:CollectionName)
   :uri: "anblab.net/" # mwg-coll:CollectionURI - адрес фотки в интернете
+  :name_suffix_template: "#{name}" #"{$}(#{name})" #will be added to filename after ID
   
 # Период события
   :date_start: "2011-11-02 00:00:00" #YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]

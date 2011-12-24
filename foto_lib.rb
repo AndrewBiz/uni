@@ -6,7 +6,7 @@ require "yaml"
 require "date"
 require "logger"
 require "fileutils"
-require "mini_exiftool" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
+require_relative "mini_exiftool_fork" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
 require_relative "progressbar" 
 # require "progressbar" # gem install progressbar (https://github.com/jfelchner/ruby-progressbar)
 #TODO optionparser
@@ -94,7 +94,7 @@ class FotoEvent
   # Instance attributes and methods
   attr_reader :options
   attr_reader :profile_name
-  attr_reader :dir_original, :dir_tmp, :dir_target, :dir_backup  
+  attr_reader :dir_original, :dir_tmp, :dir_target, :dir_backup, :name_suffix_template  
   attr_reader :foto_ext, :prefix, :directory_name
   attr_reader :title, :date_start, :date_end, :time_zone, :author_nikname, :creator
   attr_reader :copyright, :keywords, :location_created, :gps_created 
@@ -120,6 +120,7 @@ class FotoEvent
     @foto_ext = @options[:input_parameter][:foto_ext]||["jpg"]
     #TODO Check not empty ??
     @title = @options[:event][:title].strip
+    @name_suffix_template = @options[:event][:name_suffix_template]||""
     
     # Event dates
     begin 
@@ -224,6 +225,7 @@ class FotoObject
                       :gps_created => {}, :collection_name => [], :collection_uri => [], 
                       :force => false }
   @@collection = []
+  @@current_id = 0
   @@errors_occured = false
   @@metadata_conflicts_occured = false
 
@@ -256,6 +258,7 @@ class FotoObject
   def self.init_collection event
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     @@collection.clear
+    @@current_id = 0
     @@errors_occured = false
     @@metadata_conflicts_occured = false
     Dir.chdir(event.dir_original)
@@ -369,7 +372,6 @@ class FotoObject
     msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg
   end #run_command
 
-
   # batch fix dto time_zone
   def self.batch_fix_time_zone(dir)
   #TODO  
@@ -382,12 +384,12 @@ class FotoObject
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     opts = @@metadata_opts.merge opts
     Dir.chdir(dir)
-    llog = ANBLogger.new(@@llog_filename)
     $log.info "*** Setting metadata tags in #{dir}"
     if self.collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
       return   
     end
+    llog = ANBLogger.new(@@llog_filename)
  
     # generate exiftool command
     script_name = "#{__method__}.txt"
@@ -514,13 +516,13 @@ class FotoObject
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     Dir.chdir(dir)
     dir = File.expand_path(dir)
-    llog = ANBLogger.new(@@llog_filename)
     $log.info "*** Setting metadata tags in #{dir}"
     collection_real_size = self.collection_real_size
     if collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
       return   
     end
+    llog = ANBLogger.new(@@llog_filename)
 
     # generate exiftool command
     script_name = "#{__method__}.txt"
@@ -558,49 +560,12 @@ class FotoObject
 
     llog.close
   end #batch_fix_fmd
-  
-
-  # batch fix modifydate
-  # !!! DEPRECATED - to delete
-  def self.batch_fix_file_modify_date(dir=File.pwd)
-    msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
-    Dir.chdir(dir)
-    llog = ANBLogger.new(@@llog_filename)
-    $log.info "*** Fixing file modify date in #{dir}"
-
-    args = ["-v", "-P", "-overwrite_original"]  #, "#{dir}"
-    args += ["-DateTimeOriginal>FileModifyDate", "-d %Y%m%d-%H%M"]
-    
-    items2process = 0
-    @@collection.each do |foto|
-      if foto.errors.empty?
-      	items2process += 1            
-        args << %Q{#{foto.name+foto.extention}}
-      end 
-    end
-    if items2process > 0
-      msg = "*** Running #{@@ExifCommand} with #{args.inspect}"
-      $log.info msg; llog << "\n"; llog.info msg
-      msg = "Items to process: #{items2process}"; $log.info msg; llog.info msg
-      begin
-        result = system(@@ExifCommand, *args, {:chdir=>dir, :out=>llog.logdev.dev,
-                                                            :err=>llog.logdev.dev})
-        raise Error if result.nil?
-      rescue => e
-        msg = e.full_message("#{__method__} - fail to execute #{@@ExifCommand};"); $log.error msg
-      end      
-      msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg
-    else
-      msg = "*** #{__method__}: Nothing to process"; $log.warn msg    
-    end
-    llog.close
-  end
-    
+      
   # Instance attributes and methods
   attr_reader :filename, :filename_original, :metadata
-  attr_reader :name, :name_clean, :name_target, :extention
+  attr_reader :name, :name_target, :extention
   attr_accessor :date_time_original, :file_modify_date, :errors, :metadata_conflicts
-  attr_reader :backed_up
+  attr_reader :backed_up, :session_id, :date_time_initialized, :author_nickname
   
   # Class constructor
   def initialize filename, event
@@ -615,6 +580,11 @@ class FotoObject
     @filename = File.expand_path filename
     @filename_original = @filename
     
+    @date_time_initialized = DateTime.now
+    @session_id = @@current_id; @@current_id += 1
+    
+    @author_nikname = event.author_nikname
+    
     # read exif info
     @date_time_original = DateTime.civil #zero date
     @file_modify_date = DateTime.civil
@@ -628,23 +598,23 @@ class FotoObject
       raise Error, "- date_time_original NOT in event dates;" unless (@date_time_original >= event.date_start) and (@date_time_original <= event.date_end)
        
       # generate names
-      generate_target_name(event)
+      @name_target = generate_target_name event.name_suffix_template
 
       # check existing metadata
       #puts %Q{Creator=#{exif.Creator}}
       val = exif.Creator||[]
-      add_metadata_conflict("   #{@name+@extention} has value in tag ", :creator,
+      add_metadata_conflict("   #{name_ext} has value in tag ", :creator,
           [%Q{Creator=#{exif.Creator}}]) unless val.empty?
 
       #puts %Q{Copyright=#{exif.Copyright}}
       val = exif.Copyright||""
-      add_metadata_conflict("   #{@name+@extention} has value in tag ", :copyright,
+      add_metadata_conflict("   #{name_ext} has value in tag ", :copyright,
           [%Q{Copyright=#{exif.Copyright}}]) unless val.empty?
 
       # $log.debug %Q{Subject=#{exif.Subject}}
       # val = exif.Keywords||[] (mini_exiftool do not read composite tag)
       val = exif.Subject||[]
-      add_metadata_conflict("   #{@name+@extention} has value in tag ", :keywords,
+      add_metadata_conflict("   #{name_ext} has value in tag ", :keywords,
           [%Q{Keywords=#{val}}]) unless val.empty?
 
       #puts %Q{Country=#{exif.Country}}
@@ -653,40 +623,46 @@ class FotoObject
       #puts %Q{City=#{exif.City}}
       #puts %Q{Location=#{exif.Location}}
       val = exif.Country||exif.CountryCode||exif.State||exif.City||exif.Location||""
-      add_metadata_conflict("   #{@name+@extention} has value in tag ", :location_created,
+      add_metadata_conflict("   #{name_ext} has value in tag ", :location_created,
           [%Q{Country=#{exif.Country}}, %Q{CountryCode=#{exif.CountryCode}}, %Q{State=#{exif.State}},
            %Q{City=#{exif.City}}, %Q{Location=#{exif.Location}}]) unless val.empty?
 
       #puts %Q{GPSLatitude=#{exif.GPSLatitude}}
       #puts %Q{GPSLongitude=#{exif.GPSLongitude}}
       val = exif.GPSLatitude||exif.GPSLongitude||""
-      add_metadata_conflict("   #{@name+@extention} has value in tag ", :gps_created,
+      add_metadata_conflict("   #{name_ext} has value in tag ", :gps_created,
           [%Q{GPSLatitude=#{exif.GPSLatitude}}, %Q{GPSLongitude=#{exif.GPSLongitude}}]    
           ) unless val.empty?
 
       #TODO check :collection_name :collection_uri
 
     rescue MiniExiftool::Error => e
-      add_error e.full_message(@name+@extention)      
+      add_error e.full_message(name_ext)      
+      #add_error e.full_backtrace_message(name_ext)      
     rescue Error => e
-      add_error e.full_message(@name+@extention)      
+      add_error e.full_message(name_ext)      
     rescue StandardError => e
-      add_error e.full_backtrace_message(@name+@extention)
+      add_error e.full_backtrace_message(name_ext)
     end
-  
+    
     @@collection << self
   end #initialize
-  
+
+  # generate file name with extention
+  def name_ext
+  	@name+@extention
+  end
+
   # foto backup
   def backup dir_backup=nil
     return true if @backed_up
     @backed_up = false
     return false if dir_backup.nil?
     begin
-      filename_backup = File.join(dir_backup, @name+@extention)
+      filename_backup = File.join(dir_backup, name_ext)
       FileUtils.cp(@filename_original, filename_backup)
     rescue StandardError => e
-      add_error e.full_message(@name+@extention) 
+      add_error e.full_message(name_ext) 
       @backed_up = false 
     else
       @backed_up = true
@@ -705,7 +681,7 @@ class FotoObject
     begin
       FileUtils.mv(@filename, filename_target) 
     rescue StandardError => e
-      add_error e.full_message(@name+@extention) 
+      add_error e.full_message(name_ext) 
       return false 
     else
       @filename = filename_target
@@ -732,23 +708,29 @@ class FotoObject
   private
   # generate target name in YYYYMMDD-HHSS_AAA[AAA]_nameclean
   # To change if you have another name template 
-  def generate_target_name(event)
-
-    # check if file already renamed to YYYYMMDD-hhss-AAA[AAA] format
+  def generate_target_name name_suffix_template
+    name_prefix = %Q{#{@date_time_original.strftime('%Y%m%d-%H%M%S')}_#{@author_nikname}}
+    name_id = %Q{[#{@date_time_initialized.strftime('%Y%m%d-%H%M%S')}-#{sprintf("%03d", @session_id)[-3,3]}]}
+    # check if name = YYYYMMDD-hhmmss-AAA[ID]name
+    if (/^(\d{8}-\d{6}_\w{3,6})(\[.*)/ =~ @name)
+      return name_prefix+"#{$2}"
+    end
+    # check if file already renamed to YYYYMMDD-hhmm-AAA[AAA] format
     if (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
-      @name_clean = $2      
-
-    # check if file already renamed in YYYYMMDD-hhss format                 
+      name = $2      
+    # check if file already renamed in YYYYMMDD-hhmm format                 
     elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
-      @name_clean = $2
-    
+      name = $2
     # for all others just rename
     else
-      @name_clean = @name
+      name = @name
     end
-
-    @name_target = @date_time_original.strftime('%Y%m%d-%H%M')+"_#{event.author_nikname}_#{@name_clean}" 
-
+    if name_suffix_template.empty?
+        suffix = "#{name}"
+    else    
+      suffix = eval "\"#{name_suffix_template}\""
+    end   
+    return name_prefix+name_id+suffix 
   end
   
 end #FotoObject class

@@ -218,6 +218,10 @@ end # class
 
 # *** ToolBox ***
 class ANB_exiftool
+	# Constants
+ 	TAGS = { :date_time_original => ["DateTimeOriginal", "H264:DateTimeOriginal"],
+ 					 :create_date => ["CreateDate", "QuickTime:CreateDate"] }
+
   # *** Exception class ***
   class Error < StandardError; end
 
@@ -380,7 +384,8 @@ class ANB_exiftool
   end #self.move_files
 
   # batch read metadata tags
-  def self.batch_read_metadata dir=Dir.pwd
+  def self.batch_read_metadata dir=Dir.pwd, tags_to_read = [:date_time_original]
+
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     Dir.chdir(dir)
     dir = File.expand_path(dir)
@@ -390,11 +395,16 @@ class ANB_exiftool
       return   
     end
     # generate exiftool command
-    args = ["-json"]
+    args = ["-json", "-G"]
     args << %Q{-d} 
     args << %Q{%Y-%m-%d %H:%M:%S}
-    args << %Q{-CreateDate}
-    args << %Q{-DateTimeOriginal}
+    tags_to_read.each do |t|
+    	fail("Tag to read: #{t} is not valid") if TAGS[t].nil?
+    	tag = TAGS[t][0]
+    	args << %Q{-#{tag}}
+    end
+    #args << %Q{-CreateDate}
+    #args << %Q{-DateTimeOriginal}
 
     items2process = 0
     @@collection.each do |o|
@@ -424,25 +434,27 @@ class ANB_exiftool
     rescue => e
       msg = e.full_message("#{__method__} - fail to parse json"); $log.error msg
     end
-    metadata ={}
+    metadata_all ={}
     md_all.each do |mdf|
-      filename = mdf.delete("SourceFile")
+      filename = mdf.delete("SourceFile")||"not_found.ext"
       extention = File.extname filename
       name = File.basename filename, extention
-      metadata[name] = mdf
+      metadata_all[name] = mdf
     end  
 
-    #!
+    # map collection vs metadata_all
     @@collection.each do |o|
-      m = metadata[o.name]
-      puts "#{o.name}:"
-      m.each do |k,v|
-        puts " Tag #{k} = #{v}"
-      end
+      @metadata = metadata_all[o.name]||{}
+      
+p @metadata      
     end
 
-  end #self.batch_set_dates_smart
+# a.match("#{b}$")
+#    m.each do |k,v|
+#      puts " Tag #{k} = #{v}"
+#    end
 
+  end #self.batch_set_dates_smart
 
   # batch set metadata tags
   def self.batch_set_dates_smart(dir=Dir.pwd, date2set=nil, delta=0)
@@ -498,7 +510,6 @@ class ANB_exiftool
 
     llog.close
   end #self.batch_set_dates_smart
-
 
   # batch set metadata tags
   def self.batch_set_gps(dir, gps_created, force=false)
@@ -643,7 +654,7 @@ class ANB_exiftool
   # Instance attributes and methods
   attr_reader :filename, :filename_original
   attr_reader :name, :name_clean, :name_target, :extention
-  attr_accessor :errors, :metadata_conflicts
+  attr_accessor :metadata, :errors, :metadata_conflicts
   attr_accessor :date_time_original, :file_modify_date
   attr_reader :backed_up
   
@@ -663,10 +674,6 @@ class ANB_exiftool
     @@collection << self
   end #initialize
   
-  # Check and Update item
-  def check event
-  end
-    
   # foto backup
   def backup dir=""
     return true if @backed_up

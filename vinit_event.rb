@@ -42,7 +42,7 @@ begin #*** GLOBAL BLOCK
   # input parameters
   dir_to_process, yaml_name = read_input_params
 
-  ext_to_process = ["mts", "mov", "mp4"]
+  ext_to_process = ["mts", "mov", "mp4", "avi", "wmv"]
   dir_to_process = Dir.pwd
   dir_backup = File.join(dir_to_process, "backup")
   dir_target_parent = "."
@@ -51,7 +51,8 @@ begin #*** GLOBAL BLOCK
 
   Video.init_collection dir_to_process, ext_to_process
   
-  Video.batch_read_metadata dir_to_process
+  tags_to_read = [:date_time_original, :create_date]
+  Video.batch_read_metadata dir_to_process, tags_to_read
 
 =begin
   Video.check_collection event
