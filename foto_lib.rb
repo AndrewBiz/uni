@@ -847,6 +847,9 @@ class FotoObject
     # check if file already renamed in YYYYMMDD-hhmm format                 
     elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
       name = $2
+    # check if file already renamed in YYYYMMDD_name format                 
+    elsif (/^(\d{8}_)(.*)/ =~ @name) 
+      name = $2
     # for all others just rename
     else
       name = @name
