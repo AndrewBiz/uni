@@ -61,7 +61,7 @@ def read_input_params
   def find_first_yaml_file(dir_to_process)
     Dir.chdir(dir_to_process)
     yaml_file = nil
-    Dir.glob("*.yaml") do |file|
+    Dir.glob("*.{yaml,yml}") do |file|
       yaml_file = file
       break
     end  
@@ -185,7 +185,7 @@ class ANB_event
       raise FatalError, e.full_message(" - initializing event dirs; "), e.backtrace
     end
 
-    @profile_name = "#{prefix}_event.yaml"
+    @profile_name = "#{prefix}_event.yml"
     $log.info "*** Event initialized Ok"
   end #initialize
   
@@ -215,12 +215,12 @@ class ANB_event
   end
 end # class
 
-
 # *** ToolBox ***
 class ANB_exiftool
 	# Constants
- 	TAGS = { :date_time_original => ["DateTimeOriginal", "H264:DateTimeOriginal"],
- 					 :create_date => ["CreateDate", "QuickTime:CreateDate"] }
+ 	TAGS = { date_time_original: {aliases: ["DateTimeOriginal", "H264:DateTimeOriginal"], type: :date_time},
+ 					 create_date: {aliases: ["CreateDate", "QuickTime:CreateDate"], type: :date_time},
+ 					 keywords: {aliases: ["MWG:Keywords", "Composite:Keywords"], type: :array_string} }
 
   # *** Exception class ***
   class Error < StandardError; end
@@ -228,7 +228,6 @@ class ANB_exiftool
   # Class attributes and methods
   @@llog_filename = "exiftool.log"
   @@ExifCommand = "exiftool"
-  @@metadata = { "DateTimeOriginal"=>"", "CreateDate"=>""}
   @@metadata_opts = { :creator => [], :copyright => "", :keywords => [], :location_created => {},
                       :gps_created => {}, :collection_name => [], :collection_uri => [], 
                       :force => false }
@@ -242,6 +241,7 @@ class ANB_exiftool
   def self.errors_occured
     @@errors_occured
   end
+  
   # Collection size - only clean items count (no errors)
   def self.collection_real_size
     size = 0
@@ -287,8 +287,97 @@ class ANB_exiftool
     $log.info "*** TOTAL files initialized: #{@@collection.count}"
   end
 
+  # conversion
+  def self.convert_tag tag_val=nil, tag_type=:string
+    return nil if tag_val.nil?
+    case tag_type
+	  when :date_time then 
+	    return DateTime.strptime(tag_val, $DateTimeFormat) 
+	  when :array_string then 
+	  	return tag_val #TODO 
+	  when :string then 
+	  	return tag_val
+	  else 
+	  	return nil
+    end    
+  end #convert_tag
+
+  # batch read metadata tags
+  def self.batch_read_metadata dir=Dir.pwd, tags_to_read = [:date_time_original]
+    msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
+    Dir.chdir(dir)
+    dir = File.expand_path(dir)
+    $log.info "*** Setting metadata tags in #{dir}"
+    if self.collection_real_size <= 0
+      msg = "*** #{__method__}: Nothing to process"; $log.warn msg
+      return   
+    end
+    # generate exiftool command
+    args = ["-json", "-G"]
+    args << %Q{-d} 
+    args << %Q{%Y-%m-%d %H:%M:%S}
+    tags_to_read.each do |t|
+    	fail("Tag to read: #{t} is not valid") if TAGS[t].nil?
+    	args << %Q{-#{TAGS[t][:aliases][0]}}
+    end
+
+    items2process = 0
+    @@collection.each do |o|
+      if o.errors.empty?
+      	items2process += 1            
+        args << %Q{#{o.name+o.extention}}
+      end 
+    end
+    
+    # generate json via exiftool
+    json_name = "metadata.json"
+    File.open(json_name, "w+") do |f|
+      msg = "*** Running #{@@ExifCommand} #{args*" "}"; $log.info msg 
+      begin
+        result = system(@@ExifCommand, *args, {:out=>f})
+        raise Error if result.nil?
+      rescue => e
+        msg = e.full_message("#{__method__} - fail to execute #{@@ExifCommand};"); $log.error msg
+      end
+      msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg
+    end   
+
+    # parse json
+    begin
+      serialized = File.read(json_name)
+      md_all = JSON.parse(serialized)
+    rescue => e
+      msg = e.full_message("#{__method__} - fail to parse json"); $log.error msg
+    end
+    metadata_all ={}
+    md_all.each do |mdf|
+      filename = mdf.delete("SourceFile")||"not_found.ext"
+      extention = File.extname filename
+      name = File.basename filename, extention
+      metadata_all[name] = mdf
+    end  
+
+    # map collection vs metadata_all
+    @@collection.each do |o|
+      begin
+        metadata_raw = metadata_all[o.name]||{}
+        # read all tags for given object
+        tags_to_read.each do |tag|
+          tag_val = nil
+        	TAGS[tag][:aliases].each do |tag_alias|
+        	  tag_val ||= metadata_raw[tag_alias]
+        	end
+        	# tag type conversion    	
+        	o.metadata[tag] = convert_tag tag_val, TAGS[tag][:type]   
+        end    
+      rescue => e
+        o.add_error e.full_message(o.name+o.extention)
+      end       
+    end # o    
+  end #self.batch_set_dates_smart
+
   # Testing collection
-  def self.check_collection event=nil
+  def self.check_collection opts
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     
     if self.collection_real_size <= 0
@@ -301,7 +390,7 @@ class ANB_exiftool
       if  item.errors.empty?
         total += 1
         $log.info "Checking #{item.name+item.extention}"
-        item.check event
+        item.check opts
       else
         $log.info "Skipping #{item.name+item.extention} due to errors(#{item.errors.size}) found before"
       end
@@ -382,79 +471,6 @@ class ANB_exiftool
     pbar.finish
     $log.info "*** TOTAL files processed: #{total}, moved Ok: #{ok}"
   end #self.move_files
-
-  # batch read metadata tags
-  def self.batch_read_metadata dir=Dir.pwd, tags_to_read = [:date_time_original]
-
-    msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
-    Dir.chdir(dir)
-    dir = File.expand_path(dir)
-    $log.info "*** Setting metadata tags in #{dir}"
-    if self.collection_real_size <= 0
-      msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
-    end
-    # generate exiftool command
-    args = ["-json", "-G"]
-    args << %Q{-d} 
-    args << %Q{%Y-%m-%d %H:%M:%S}
-    tags_to_read.each do |t|
-    	fail("Tag to read: #{t} is not valid") if TAGS[t].nil?
-    	tag = TAGS[t][0]
-    	args << %Q{-#{tag}}
-    end
-    #args << %Q{-CreateDate}
-    #args << %Q{-DateTimeOriginal}
-
-    items2process = 0
-    @@collection.each do |o|
-      if o.errors.empty?
-      	items2process += 1            
-        args << %Q{#{o.name+o.extention}}
-      end 
-    end
-    
-    # generate json via exiftool
-    json_name = "metadata.json"
-    File.open(json_name, "w+") do |f|
-      msg = "*** Running #{@@ExifCommand} #{args*" "}"; $log.info msg 
-      begin
-        result = system(@@ExifCommand, *args, {:out=>f})
-        raise Error if result.nil?
-      rescue => e
-        msg = e.full_message("#{__method__} - fail to execute #{@@ExifCommand};"); $log.error msg
-      end
-      msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg
-    end   
-
-    # parse json
-    begin
-      serialized = File.read(json_name)
-      md_all = JSON.parse(serialized)
-    rescue => e
-      msg = e.full_message("#{__method__} - fail to parse json"); $log.error msg
-    end
-    metadata_all ={}
-    md_all.each do |mdf|
-      filename = mdf.delete("SourceFile")||"not_found.ext"
-      extention = File.extname filename
-      name = File.basename filename, extention
-      metadata_all[name] = mdf
-    end  
-
-    # map collection vs metadata_all
-    @@collection.each do |o|
-      @metadata = metadata_all[o.name]||{}
-      
-p @metadata      
-    end
-
-# a.match("#{b}$")
-#    m.each do |k,v|
-#      puts " Tag #{k} = #{v}"
-#    end
-
-  end #self.batch_set_dates_smart
 
   # batch set metadata tags
   def self.batch_set_dates_smart(dir=Dir.pwd, date2set=nil, delta=0)
@@ -655,12 +671,13 @@ p @metadata
   attr_reader :filename, :filename_original
   attr_reader :name, :name_clean, :name_target, :extention
   attr_accessor :metadata, :errors, :metadata_conflicts
-  attr_accessor :date_time_original, :file_modify_date
+  attr_accessor :date_time_original
   attr_reader :backed_up
   
   # Class constructor
   def initialize filename
     raise Error, "- #{filename} does not exist;" unless File.exist?(filename) 
+    @metadata = {}
     @errors = []
     @metadata_conflicts = [] #:creator :copyright :keywords :location_created :gps_created :collection_name :collection_uri
     @backed_up = false
@@ -669,8 +686,7 @@ p @metadata
     @name_target = @name
     @filename = File.expand_path filename
     @filename_original = @filename
-    @date_time_original = DateTime.civil #zero date
-    @file_modify_date = DateTime.civil
+    @date_time_original = nil #DateTime.civil #zero date
     @@collection << self
   end #initialize
   
@@ -723,23 +739,21 @@ p @metadata
     $log.info %Q{      Values: #{metadata_values.inspect}} 
     @metadata_conflicts << metadata_name
   end  
-  
-  private
 
   # generate target name in YYYYMMDD-HHSS_AAA[AAA]_nameclean
   # To change if you have another name template 
-  def generate_target_name author_nikname
+  def generate_name_target(opts={})
     # check if file already renamed to YYYYMMDD-hhss-AAA[AAA] format
     if (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
-      @name_clean = $2      
+      name_clean = $2      
     # check if file already renamed in YYYYMMDD-hhss format                 
     elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
-      @name_clean = $2
+      name_clean = $2
     # for all others just rename
     else
-      @name_clean = @name
+      name_clean = @name
     end
-    @name_target = @date_time_original.strftime('%Y%m%d-%H%M')+"_#{author_nikname}_#{@name_clean}" 
+    return opts[:date_time_original].strftime('%Y%m%d-%H%M')+"_#{opts[:author_nikname]}_#{name_clean}" 
   end
 
 end #ANB_exiftool class

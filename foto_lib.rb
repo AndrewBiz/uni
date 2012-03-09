@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby -w
 # encoding: UTF-8
-# ANB Foto Library
+
+VERSION = "0.3.0" #added sort on event
+
 require "rubygems"
 require "yaml"
 require "date"
@@ -14,11 +16,8 @@ require_relative "progressbar"
 # *** Standard Ruby class - anb alter ***
 class Exception
   def full_message(info=nil)
-    "#{self.class}: #{info} #{message}"
-  end
-  def full_backtrace_message(info=nil)
     msg = "#{self.class}: #{info} #{message}"
-    msg += ". Backtrace: #{backtrace.inspect}" if $log.debug?
+    msg += "BACKTRACE: #{backtrace.inspect}" if $log.debug?
     return  msg
   end
 end
@@ -37,9 +36,6 @@ class ANBLogger < Logger
     end
 
     case severity
-  		#when WARN
-  		#	$stderr.puts "WARN: #{msg}"
-  		#	$stderr.puts	
   		when ERROR
   			$stderr.puts "ERROR: #{msg}"
   			$stderr.puts	
@@ -54,31 +50,21 @@ class ANBLogger < Logger
 
 end  #Class ANBLogger
 
-# *** Read input params
-def read_input_params
-  #utility sub
-  def find_first_yaml_file(dir_to_process)
-    Dir.chdir(dir_to_process)
-    yaml_file = nil
-    Dir.glob("*.yaml") do |file|
-      yaml_file = file
-      break
-    end  
-    return yaml_file
-  end
-
-  # read input args
-  dir_to_process = ARGV[0]||Dir.pwd
-  fail("#{dir_to_process} does not exist") unless File.exist?(dir_to_process) 
-  fail("#{dir_to_process} is not a Directory") unless File.directory?(dir_to_process)
-  $log.info "Dir to be processed: #{dir_to_process}"
-  
-  yaml_name = ARGV[1]||find_first_yaml_file(dir_to_process)
-  fail("- no YAML File found;") if yaml_name.nil?  
-  fail("- no YAML File found;") unless File.file?(yaml_name)
-  $log.info "YAML Profile to be processed: #{yaml_name}"
-  return [dir_to_process, yaml_name]
-end
+# *** Configuration functions
+class ANBConfig
+  # *** Exception class ***
+  class FatalError < StandardError; end
+  # Find yaml file in assets directories
+  def self.get_1st_yaml ypath=["."], ymask=""
+    fmask = []
+    ypath.each {|d| fmask << File.join(d, "#{ymask}.{yaml,yml}")}
+    $log.info "* Trying to find YAML in #{fmask}"
+    yaml = Dir.glob(fmask, File::FNM_CASEFOLD)[0] # 1st found file
+    fail(FatalError, "No YAML file found; ") if yaml.nil?
+    fail(FatalError, "- '#{yaml}' is not a file;") unless File.file?(yaml)
+    yaml
+  end    
+end #class ANBConfig
 
 # *** Foto event ***
 class FotoEvent
@@ -92,95 +78,181 @@ class FotoEvent
   class FatalError < StandardError; end
 
   # Instance attributes and methods
-  attr_reader :options
-  attr_reader :profile_name
-  attr_reader :dir_original, :dir_tmp, :dir_target, :dir_backup, :name_suffix_template  
-  attr_reader :foto_ext, :prefix, :directory_name
-  attr_reader :title, :date_start, :date_end, :time_zone, :author_nikname, :creator
-  attr_reader :copyright, :keywords, :location_created, :gps_created 
+  # TODO move to option_parser
+  attr_reader :dir_original, :dir_tmp, :dir_target, :dir_backup, :dir_assets
+  attr_reader :name_suffix_template, :name_id_template, :foto_ext
+  attr_reader :force_set_dto, :delta_dto
+    
+  # Event data
+  attr_reader :profile_name, :sort, :yaml_event
+  attr_reader :prefix, :directory_name
+  attr_reader :title, :date_start, :date_end, :author_nikname, :creator
+  attr_reader :copyright, :keywords, :location_created, :gps_created, :collection_name, :collection_uri 
   
   # Class variables
-  @@location_created_default = { :world_region => "", :country => "", :country_code => "",
+  @@location_created_default = { :time_zone => "", :world_region => "", :country => "", :country_code => "",
       :state => "", :city => "", :location => "" }
   
   @@gps_created_default = { :gps_latitude => "", :gps_latitude_ref => "", :gps_longitude => "",
       :gps_longitude_ref => "", :gps_altitude => "", :gps_altitude_ref => "" }
-  
+
+
   # Event initialize 
-  def initialize(yaml_name, dir_to_process=File.pwd)
+  def initialize(yaml_config, yaml_event, dir_to_process=File.pwd)
     $log.info "*** Initializing event"
-    # read script_options fromm profile
-    begin
-      @options = YAML.load_file(yaml_name)
-      $log.info "YAML loaded: #{yaml_name}"
+
+    # read from config
+    begin   
+      yaml = yaml_config
+      options_cfg = YAML.load_file(yaml)
+      $log.info "YAML loaded: #{yaml}"
     rescue StandardError => e
-      raise FatalError, e.full_message(" - Parsing YAML #{yaml_name}; "), e.backtrace
+      raise FatalError, e.full_message(" - Processing YAML #{yaml}; ")
+    end
+
+    # read from event profile
+    begin   
+      @yaml_event = yaml_event
+      yaml = @yaml_event
+      options_evt = YAML.load_file(yaml)
+      $log.info "YAML loaded: #{yaml}"
+    rescue StandardError => e
+      raise FatalError, e.full_message(" - Processing YAML #{yaml}; ")
     end
     
-    @foto_ext = @options[:input_parameter][:foto_ext]||["jpg"]
-    #TODO Check not empty ??
-    @title = @options[:event][:title].strip
-    @name_suffix_template = @options[:event][:name_suffix_template]||""
-    
+    @foto_ext = options_cfg[:input_parameter][:foto_ext]||["jpg"]
+
+    @title = options_evt[:event][:title].strip
+    @sort = options_evt[:event][:sort]||""
+
+    @collection_name = @title
+    @collection_uri = options_evt[:event][:uri].strip
+
+    #TODO put into options struct
+    @name_suffix_template = options_cfg[:input_parameter][:name_suffix_template]||""
+    @name_id_template = options_cfg[:input_parameter][:name_id_template]||""
+    @force_set_dto = options_cfg[:input_parameter][:force_set_dto]||false
+    @delta_dto = options_cfg[:input_parameter][:delta_dto]||10
+
+    # creating array with assets directories (a-la PATH)
+    @dir_assets = options_cfg[:input_parameter][:dir_assets]||[]
+    @dir_assets << File.join(ENV['HOME'], File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME)))
+    @dir_assets << File.dirname($PROGRAM_NAME)
+
     # Event dates
     begin 
-      @date_start = DateTime.strptime(@options[:event][:date_start], $DateTimeFormat)
+      date = options_evt[:event][:date_start]||""
+      @date_start = DateTime.strptime(date, $DateTimeFormat)
     rescue StandardError => e
-      raise FatalError, e.full_message(" - date_start parsing error;"), e.backtrace
+      raise FatalError, e.full_message(" - date_start parsing error;")
     end
     begin
-      @date_end = DateTime.strptime(@options[:event][:date_end], $DateTimeFormat)
+      date = options_evt[:event][:date_end]||""
+      if date.empty?
+      	# One day event
+      	@date_end = DateTime.new(@date_start.year, @date_start.mon, @date_start.mday, 23, 59, 59)
+      else
+      	@date_end = DateTime.strptime(date, $DateTimeFormat)
+      end
     rescue StandardError => e
-      raise FatalError, e.full_message(" - date_end parsing error;"), e.backtrace
+      raise FatalError, e.full_message(" - date_end parsing error;")
     end
     
     raise FatalError, "date_end must be >= date_begin" unless  @date_end >= @date_start 
     $log.info "Event dates: #{@date_start.to_date}..#{@date_end.to_date}"
     
-    @time_zone = @options[:event][:time_zone]||""
-
-    @author_nikname = @options[:event][:author_nikname]||""
-    @creator = @options[:event][:creator]||[]
-    
     @keywords = []
-    kwh = @options[:event][:keywords]||{}
+    kwh = options_evt[:event][:keywords]||{}
     kwh.each do |k,v|
       @keywords.concat(v)
     end  
     @keywords.uniq!
     @keywords.delete_if {|v| v.empty?}
-    
-    @copyright = @options[:event][:copyright]||""
-    
-    @location_created = @options[:event][:location_created]||{}
-    @location_created = @@location_created_default.merge @location_created
-    
-    @gps_created = @options[:event][:gps_created]||{}
-    @gps_created = @@gps_created_default.merge @gps_created
-    
+
+    # creator\copyright
+    alias_creator_copyright = options_evt[:event][:alias_creator_copyright]||""
+    if alias_creator_copyright.empty?
+      #read from event.yaml
+      @author_nikname = options_evt[:event][:author_nikname]||""
+      @creator = options_evt[:event][:creator]||[]
+      @copyright = options_evt[:event][:copyright]||""
+    else
+      # read data from creators.yml
+      begin
+        yaml = ANBConfig.get_1st_yaml(@dir_assets, "creator*")
+        creators = YAML.load_file(yaml)
+        $log.info "YAML loaded: #{yaml}"
+        my_creator = creators[alias_creator_copyright]
+        fail(FatalError, " - No creator #{alias_creator_copyright} found in YAML #{yaml}; ") if my_creator.nil?              
+        @author_nikname = my_creator[:author_nikname]||""
+        @creator = my_creator[:creator]||[]
+        @copyright = my_creator[:copyright]||""
+      rescue ANBConfig::FatalError => e
+        raise
+      rescue FotoEvent::FatalError => e
+        raise
+      rescue StandardError => e
+        raise FatalError, e.full_message(" - Parsing YAML #{yaml}; ")
+      end
+    end
+    @copyright = "#{@date_start.year} " + @copyright
+
+    # place_created
+    alias_place_created = options_evt[:event][:alias_place_created]||""
+    if alias_place_created.empty?
+      #read from event.yaml
+      @location_created = options_evt[:event][:location_created]||{}
+      @location_created = @@location_created_default.merge @location_created
+      @gps_created = options_evt[:event][:gps_created]||{}
+      @gps_created = @@gps_created_default.merge @gps_created
+    else
+      # read data from locations.yml
+      begin
+        yaml = ANBConfig.get_1st_yaml(@dir_assets, "place*")
+        places = YAML.load_file(yaml)
+        $log.info "YAML loaded: #{yaml}"
+        my_place = places[alias_place_created]
+        fail(FatalError, " - No place #{alias_place_created} found in YAML #{yaml}; ") if my_place.nil?          
+        @location_created = my_place[:location_created]||{}
+        @location_created = @@location_created_default.merge @location_created
+        @gps_created = my_place[:gps_created]||{}
+        @gps_created = @@gps_created_default.merge @gps_created
+  
+      rescue ANBConfig::FatalError => e
+        raise
+      rescue FotoEvent::FatalError => e
+        raise
+      rescue StandardError => e
+        raise FatalError, e.full_message(" - Parsing YAML #{yaml}; ")
+      end
+    end
+
     begin # create\check event directories
       @dir_original = File.expand_path(dir_to_process)
 
-      @prefix = generate_prefix(@date_start, @date_end)
+      @prefix = generate_prefix(@date_start, @date_end)+@sort
       @directory_name = "#{@prefix} #{@title}".strip
 
-  		dir_tmp = @options[:input_parameter][:dir_tmp]||DIR_TMP
+  		dir_tmp = options_cfg[:input_parameter][:dir_tmp]||DIR_TMP
       #TODO encoding in dir (UTF8 vs Win1251)
       @dir_tmp = File.expand_path(File.join(dir_tmp))
+      #TODO make dir only when using it
       Dir.mkdir(@dir_tmp) unless File.exists?(@dir_tmp)
 
-  		dir_target_parent = @options[:input_parameter][:dir_target_parent]||DIR_TARGET_PARENT 
+  		dir_target_parent = options_cfg[:input_parameter][:dir_target_parent]||DIR_TARGET_PARENT 
   		#TODO encoding in dir (UTF8 vs Win1251)
   		@dir_target = File.join(File.expand_path(dir_target_parent), @directory_name) 
+      #TODO make dir only when using it
       Dir.mkdir(@dir_target) unless File.exists?(@dir_target)
       
-  		dir_backup = @options[:input_parameter][:dir_backup]||DIR_BACKUP
+  		dir_backup = options_cfg[:input_parameter][:dir_backup]||DIR_BACKUP
       #TODO encoding in dir (UTF8 vs Win1251)
       @dir_backup = File.expand_path(File.join(dir_backup))
+      #TODO make dir only when using it
       Dir.mkdir(@dir_backup) unless File.exists?(@dir_backup)
       
     rescue StandardError => e
-      raise FatalError, e.full_message(" - initializing event dirs; "), e.backtrace
+      raise FatalError, e.full_message(" - initializing event dirs; ")
     end
     $log.info "Event dir_original: #{@dir_original}"
     $log.info "Event dir_tmp: #{@dir_tmp}"
@@ -188,9 +260,9 @@ class FotoEvent
     $log.info "Event dir_backup: #{@dir_backup}"
     
     begin #copy profile to target event folder
-      @profile_name = File.join(@dir_target, "#{@prefix}_event_profile.yaml")
+      @profile_name = File.join(@dir_target, "#{@prefix}_#{File.basename(@yaml_event)}")
       FileUtils.mv(@profile_name, @profile_name+"_backup", :force => true) if File.exists?(@profile_name)
-      FileUtils.cp(yaml_name, @profile_name)
+      FileUtils.cp(@yaml_event, @profile_name)
     rescue => e
       raise FatalError, " - copying profile to target event dir;"
     end
@@ -211,6 +283,7 @@ class FotoEvent
     return prefix += "-"+date2.strftime('%d') if date1.mday != date2.mday
     return prefix
   end
+
 end # class
 
 # *** Foto object ***
@@ -218,14 +291,41 @@ class FotoObject
   # *** Exception class ***
   class Error < StandardError; end
 
+  # *** ID Counter ***
+  class ID_counter   
+    Limit36 = "zzzzz" # zzzzz= max id during the day
+    Limit_per_day = Limit36.to_i(36)
+    Limit_per_sec = Limit_per_day/(24.0*3600.0)  
+    attr_reader :date_init, :num, :counter
+    
+    def initialize
+      @num = 0
+      @date_init = DateTime.now
+      @counter = ((@date_init.hour*3600 + @date_init.min*60 + @date_init.sec) * Limit_per_sec).to_i
+    end
+
+    def counter36
+      @counter.to_s(36).upcase
+    end
+    
+    def next
+      @num += 1
+      @counter += 1
+      if @counter > Limit_per_day
+        dn = @date_init.next 
+        @date_init = DateTime.new(dn.year, dn.mon, dn.day, 0, 0, 0, dn.ofset)
+        @counter = 0
+      end
+    end  
+  end # class counter
+
   # Class attributes and methods
   @@llog_filename = "exiftool.log"
   @@ExifCommand = "exiftool"
   @@metadata_opts = { :creator => [], :copyright => "", :keywords => [], :location_created => {},
-                      :gps_created => {}, :collection_name => [], :collection_uri => [], 
+                      :gps_created => {}, :collection_name => "", :collection_uri => "", 
                       :force => false }
   @@collection = []
-  @@current_id = 0
   @@errors_occured = false
   @@metadata_conflicts_occured = false
 
@@ -250,7 +350,6 @@ class FotoObject
 
   # mkdir
   def self.make_dir dir
-    #TODO encoding in dir (UTF8 vs Win1251)
     Dir.mkdir(dir) unless File.exists?(dir)
   end  
   
@@ -258,7 +357,12 @@ class FotoObject
   def self.init_collection event
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
     @@collection.clear
-    @@current_id = 0
+
+    @@id = ID_counter.new
+    $log.info "Date_init=#{@@id.date_init}, Start counter=#{@@id.counter}(#{@@id.counter36})"
+    
+    @@current_dto2set = event.date_start
+    
     @@errors_occured = false
     @@metadata_conflicts_occured = false
     Dir.chdir(event.dir_original)
@@ -372,13 +476,6 @@ class FotoObject
     msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg
   end #run_command
 
-  # batch fix dto time_zone
-  def self.batch_fix_time_zone(dir)
-  #TODO  
-    msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
-    $log.info "*** processed:"
-  end
-
   # batch set metadata tags
   def self.batch_set_tags(dir=File.pwd, opts={})
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
@@ -408,6 +505,11 @@ class FotoObject
           f.puts %Q{# #{total}}
           
           # TODO force
+          # Force set date_time_original
+          if foto.dto_need2set
+            f.puts %Q{-AllDates=#{foto.date_time_original}}
+          end
+          
           if foto.metadata_conflicts.index(:creator).nil?
             # MWG:Creator = EXIF:Artist, IPTC:By-line, XMP-dc:Creator
             creator = opts[:creator]||[]
@@ -436,7 +538,10 @@ class FotoObject
             location_created = opts[:location_created]||{}
 
             world_region = location_created[:world_region]||""
-            #0 TODO!    
+            f.puts %Q{-XMP:LocationCreatedWorldRegion=#{world_region}} unless world_region.empty?
+
+            time_zone = location_created[:time_zone]||""
+            # TODO time_zone
 
             country = location_created[:country]||"" #1 MWG:Country Страна
             f.puts %Q{-MWG:Country=#{country}} unless country.empty?
@@ -479,13 +584,21 @@ class FotoObject
               f.puts %Q{-GPSAltitudeRef=#{gps_altitude_ref}}
             end
           end 
-          #TODO mwg-coll:CollectionName :collection_name
-          #TODO mwg-coll:CollectionURI :collection_uri
+
+          # collection_name
+          collection_name = opts[:collection_name]||""
+          f.puts %Q{-XMP:CollectionName-=#{collection_name}}        
+          f.puts %Q{-XMP:CollectionName+=#{collection_name}} 
+
+          # collection_uri
+          collection_uri = opts[:collection_uri]||""
+          f.puts %Q{-XMP:CollectionURI-=#{collection_uri}}        
+          f.puts %Q{-XMP:CollectionURI+=#{collection_uri}} 
 
           #General
           f.puts %Q{-v}
 
-          #TODO put UTF8 only if any IPTC tag exist to avoid creating IPTC group from scratch
+          #FIXME put UTF8 only if any IPTC tag exist to avoid creating IPTC group from scratch
           f.puts %Q{-IPTC:CodedCharacterSet=UTF8}
           
           f.puts %Q{-EXIF:ModifyDate=now}
@@ -564,8 +677,9 @@ class FotoObject
   # Instance attributes and methods
   attr_reader :filename, :filename_original, :metadata
   attr_reader :name, :name_target, :extention
-  attr_accessor :date_time_original, :file_modify_date, :errors, :metadata_conflicts
-  attr_reader :backed_up, :session_id, :date_time_initialized, :author_nickname
+  attr_reader :date_time_original, :dto_need2set 
+  attr_accessor :errors, :metadata_conflicts
+  attr_reader :backed_up, :session_id, :id36, :date_time_initialized, :author_nickname
   
   # Class constructor
   def initialize filename, event
@@ -575,30 +689,40 @@ class FotoObject
     @backed_up = false
     @extention = File.extname filename
     @name = File.basename filename, extention
-    #TODO! check double names!    
 
     @filename = File.expand_path filename
     @filename_original = @filename
-    
-    @date_time_initialized = DateTime.now
-    @session_id = @@current_id; @@current_id += 1
-    
+
+    @@id.next    
+    @session_id = @@id.num
+    @id36 = @@id.counter36
+
     @author_nikname = event.author_nikname
     
     # read exif info
     @date_time_original = DateTime.civil #zero date
-    @file_modify_date = DateTime.civil
     begin 
       exif = MiniExiftool.new filename, :timestamps => DateTime #, :convert_encoding => true
       @date_time_original = exif.date_time_original||false
-      @file_modify_date = exif.file_modify_date||false
       @metadata = exif.to_hash
-
-      raise Error, "- date_time_original = 00.00.00;" unless @date_time_original 
+      
+      @dto_need2set = false
+      unless @date_time_original
+        if event.force_set_dto
+          # setting dto
+          @dto_need2set = true
+          @date_time_original = @@current_dto2set
+          @@current_dto2set += event.delta_dto*(1.0/86400) #in seconds
+          $log.info "    date_time_original is forced to #{@date_time_original}"
+        else  
+          raise Error, "- date_time_original = 00.00.00"
+        end   
+      end
+      
       raise Error, "- date_time_original NOT in event dates;" unless (@date_time_original >= event.date_start) and (@date_time_original <= event.date_end)
        
       # generate names
-      @name_target = generate_target_name event.name_suffix_template
+      @name_target = generate_target_name(name_suffix: event.name_suffix_template, name_id: event.name_id_template)
 
       # check existing metadata
       #puts %Q{Creator=#{exif.Creator}}
@@ -637,12 +761,12 @@ class FotoObject
       #TODO check :collection_name :collection_uri
 
     rescue MiniExiftool::Error => e
+      #add_error e.full_message(name_ext)      
       add_error e.full_message(name_ext)      
-      #add_error e.full_backtrace_message(name_ext)      
     rescue Error => e
       add_error e.full_message(name_ext)      
     rescue StandardError => e
-      add_error e.full_backtrace_message(name_ext)
+      add_error e.full_message(name_ext)
     end
     
     @@collection << self
@@ -672,7 +796,6 @@ class FotoObject
 
   # foto rename to target
   def move_to dir=nil
-    #TODO chmod!!!, работа с флагами
     return false if dir.nil?
     
     filename_target = File.join(dir, @name_target+@extention)
@@ -706,17 +829,20 @@ class FotoObject
   end  
     
   private
-  # generate target name in YYYYMMDD-HHSS_AAA[AAA]_nameclean
+  # generate target name in YYYYmmdd-HHMMSS_AAA[ID]_nameclean
   # To change if you have another name template 
-  def generate_target_name name_suffix_template
+  def generate_target_name template={name_suffix: "", name_id: ""}
+
     name_prefix = %Q{#{@date_time_original.strftime('%Y%m%d-%H%M%S')}_#{@author_nikname}}
-    name_id = %Q{[#{@date_time_initialized.strftime('%Y%m%d-%H%M%S')}-#{sprintf("%03d", @session_id)[-3,3]}]}
+
     # check if name = YYYYMMDD-hhmmss-AAA[ID]name
     if (/^(\d{8}-\d{6}_\w{3,6})(\[.*)/ =~ @name)
       return name_prefix+"#{$2}"
     end
     # check if file already renamed to YYYYMMDD-hhmm-AAA[AAA] format
     if (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
+      name = $2      
+    elsif (/^(\d{8}-\d{4}-\w{3,6}_)(.*)/ =~ @name)
       name = $2      
     # check if file already renamed in YYYYMMDD-hhmm format                 
     elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
@@ -725,12 +851,20 @@ class FotoObject
     else
       name = @name
     end
-    if name_suffix_template.empty?
-        suffix = "#{name}"
+
+    if template[:name_id].empty?
+      name_id = %Q{[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,"0")}]}
+    else
+      name_id = eval "\"#{template[:name_id]}\""
+    end
+
+    if template[:name_suffix].empty?
+      suffix = "#{name}"
     else    
-      suffix = eval "\"#{name_suffix_template}\""
+      suffix = eval "\"#{template[:name_suffix]}\""
     end   
-    return name_prefix+name_id+suffix 
+
+    name_prefix+name_id+suffix 
   end
   
 end #FotoObject class

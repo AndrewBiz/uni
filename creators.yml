@@ -1,0 +1,15 @@
+﻿---
+anb:
+  :author_nikname: "ANB" #used in file name
+  :creator: ["Andrey Bizyaev (photographer)", "Andrey Bizyaev (camera owner)"] # MWG:Creator
+  :copyright: "(c) Andrey Bizyaev. All Rights Reserved." # MWG:Copyright
+
+msv:
+  :author_nikname: "MSV" #used in file name
+  :creator: ["Sergei Masyuk (photographer)", "Sergei Masyuk (camera owner)"] # MWG:Creator
+  :copyright: "(c) Sergei Masyuk. All Rights Reserved." # MWG:Copyright 
+
+dif:
+  :author_nikname: "DIF" #used in file name
+  :creator: ["Unknown author"] # MWG:Creator
+  :copyright: "(c) Unknown author" # MWG:Copyright

@@ -83,7 +83,7 @@ class MiniExiftool
     opt_params << (@numerical ? '-n ' : '')
     opt_params << (@composite ? '' : '-e ')
     opt_params << (@convert_encoding ? '-L ' : '')
-    cmd = %Q(#@@cmd -q -q -s -t #{opt_params} #{@@sep_op} #{filename}) #!!! ANB cleared: {Shellwords.escape(filename)}
+    cmd = %Q(#@@cmd -q -q -s -t #{opt_params} #{@@sep_op} "#{filename}") #!!! ANB cleared: {Shellwords.escape(filename)}
     if run(cmd)
       parse_output
     else

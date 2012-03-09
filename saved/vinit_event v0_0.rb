@@ -6,44 +6,26 @@ require_relative "anb_lib.rb"
 class Video < ANB_exiftool
 
   # Testing video file
-  def check opts={}
+  def check event
+    # read exif info
     begin 
-      event = opts[:event]
+      #exif = MiniExiftool.new filename, :timestamps => DateTime #, :convert_encoding => true
       dto = @metadata[:date_time_original]||@metadata[:create_date]||nil
+
       raise Error, "- date_time_original = 00.00.00;" unless dto 
       raise Error, "- date_time_original NOT in event dates;" unless (dto >= event.date_start) and (dto <= event.date_end)
-      
-      file_format = event.options[:event][:file_format]||""
-      file_format = file_format + "_" unless file_format.empty?
+       
       # generate names
-      @name_target = generate_name_target(author_nikname: event.author_nikname, date_time_original: dto, file_format: file_format) 
+      @name_target = generate_name_target(author_nikname: event.author_nikname, date_time_original: dto) 
 
+    #rescue MiniExiftool::Error => e
+    #  add_error e.full_backtrace_message(@name+@extention)      
     rescue Error => e
       add_error e.full_message(@name+@extention)      
     rescue StandardError => e
       add_error e.full_backtrace_message(@name+@extention)
     end
   end #check
-  
-  # generate target name in YYYYMMDD-HHSS_AAA[AAA]_nameclean
-  # To change if you have another name template 
-  def generate_name_target(opts={})
-    # check if file already renamed to YYYYMMDD-hhss-AAA[AAA] format
-    if (/^(\d{8}-\d{4}_\w{3,6}_\w{1,13}_)(.*)/ =~ @name)
-      name_clean = $2      
-    elsif (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
-      name_clean = $2      
-    # check if file already renamed in YYYYMMDD-hhss format                 
-    elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
-      name_clean = $2
-    # for all others just rename
-    else
-      name_clean = @name
-    end
-    return opts[:date_time_original].strftime('%Y%m%d-%H%M')+"_#{opts[:author_nikname]}_#{opts[:file_format]}#{name_clean}" 
-  end
-
-  
 
 end #class
  
@@ -69,7 +51,7 @@ begin #*** GLOBAL BLOCK
   
   Video.batch_read_metadata dir_to_process, [:date_time_original, :create_date]
 
-  Video.check_collection(event: event)
+  Video.check_collection event
 
   Video.backup_files dir_backup 
 

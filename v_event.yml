@@ -1,0 +1,13 @@
+# Video event profile. Attention! File code page should be UTF-8
+# Паспорт видеособытия. Внимание! Кодировка файла должна быть UTF-8
+---
+:event:
+  :title: "Вьетнам Mui-Ne" # Место Краткое название события (mwg_coll:CollectionName)
+  
+# Период события
+  :date_start: "2011-11-20 16:00:00" #YYYY-mm-dd HH:MM:SS
+  :date_end: "2011-12-04 20:00:00" #YYYY-mm-dd HH:MM:SS
+
+  :author_nikname: "ANB" #used in file name  
+  
+  :file_format: "1440x1080x30i" #put in name "1920x1080x50p"
