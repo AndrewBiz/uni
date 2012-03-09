@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -w
 # encoding: UTF-8
 
-VERSION = "0.3.0" #added sort on event
+VERSION = "0.3.1" #added sort on event
 
 require "rubygems"
 require "yaml"
