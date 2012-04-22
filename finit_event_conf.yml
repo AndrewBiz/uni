@@ -10,5 +10,8 @@
 #  :name_id_template: "[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,'0')}]"
   :name_suffix_template: "#{name}" #"{$}(#{name})" #will be added to filename after ID
   
-  :force_set_dto: false #true or false. if true - date_time_original = 00.00.00 will be replaced with event.date_start + delta
-  :delta_dto: 20 #seconds. Delta is used for force_set_date_time_original parameter
+  :force_set_dto: true #true or false. if true - date_time_original = 00.00.00 will be replaced with event.date_start + delta
+  :delta_dto: 60 #seconds. Delta is used for force_set_date_time_original parameter
+  
+  :txt_files_process: true #true or false. if true - replace old foto names with new ones - in txt files
+  :txt_files_process_list: [".picasa.ini", "picasa.ini"]

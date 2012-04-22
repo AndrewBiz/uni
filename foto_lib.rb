@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -w
 # encoding: UTF-8
 
-VERSION = "0.3.1" #added sort on event
+VERSION = "0.4.0" #txt files find-and-replace foto-names added
 
 require "rubygems"
 require "yaml"
@@ -63,7 +63,18 @@ class ANBConfig
     fail(FatalError, "No YAML file found; ") if yaml.nil?
     fail(FatalError, "- '#{yaml}' is not a file;") unless File.file?(yaml)
     yaml
-  end    
+  end
+  
+  # read from config
+  def self.load_yaml yaml=nil   
+    yaml_content = YAML.load_file(yaml)
+    $log.info "YAML loaded: #{yaml}"
+  rescue StandardError => e
+    raise FatalError, e.full_message(" - Processing YAML #{yaml}; ")
+  else
+    return yaml_content
+  end
+  
 end #class ANBConfig
 
 # *** Foto event ***
@@ -98,27 +109,12 @@ class FotoEvent
 
 
   # Event initialize 
-  def initialize(yaml_config, yaml_event, dir_to_process=File.pwd)
+  def initialize options_cfg={}, dir_to_process=File.pwd
     $log.info "*** Initializing event"
 
-    # read from config
-    begin   
-      yaml = yaml_config
-      options_cfg = YAML.load_file(yaml)
-      $log.info "YAML loaded: #{yaml}"
-    rescue StandardError => e
-      raise FatalError, e.full_message(" - Processing YAML #{yaml}; ")
-    end
-
     # read from event profile
-    begin   
-      @yaml_event = yaml_event
-      yaml = @yaml_event
-      options_evt = YAML.load_file(yaml)
-      $log.info "YAML loaded: #{yaml}"
-    rescue StandardError => e
-      raise FatalError, e.full_message(" - Processing YAML #{yaml}; ")
-    end
+    @yaml_event = ANBConfig.get_1st_yaml(["."], "event*")
+    options_evt = ANBConfig.load_yaml @yaml_event
     
     @foto_ext = options_cfg[:input_parameter][:foto_ext]||["jpg"]
 
@@ -180,15 +176,12 @@ class FotoEvent
       # read data from creators.yml
       begin
         yaml = ANBConfig.get_1st_yaml(@dir_assets, "creator*")
-        creators = YAML.load_file(yaml)
-        $log.info "YAML loaded: #{yaml}"
+        creators = ANBConfig.load_yaml yaml
         my_creator = creators[alias_creator_copyright]
         fail(FatalError, " - No creator #{alias_creator_copyright} found in YAML #{yaml}; ") if my_creator.nil?              
         @author_nikname = my_creator[:author_nikname]||""
         @creator = my_creator[:creator]||[]
         @copyright = my_creator[:copyright]||""
-      rescue ANBConfig::FatalError => e
-        raise
       rescue FotoEvent::FatalError => e
         raise
       rescue StandardError => e
@@ -209,8 +202,7 @@ class FotoEvent
       # read data from locations.yml
       begin
         yaml = ANBConfig.get_1st_yaml(@dir_assets, "place*")
-        places = YAML.load_file(yaml)
-        $log.info "YAML loaded: #{yaml}"
+        places = ANBConfig.load_yaml yaml
         my_place = places[alias_place_created]
         fail(FatalError, " - No place #{alias_place_created} found in YAML #{yaml}; ") if my_place.nil?          
         @location_created = my_place[:location_created]||{}
@@ -218,8 +210,6 @@ class FotoEvent
         @gps_created = my_place[:gps_created]||{}
         @gps_created = @@gps_created_default.merge @gps_created
   
-      rescue ANBConfig::FatalError => e
-        raise
       rescue FotoEvent::FatalError => e
         raise
       rescue StandardError => e
@@ -465,15 +455,15 @@ class FotoObject
 
   # Run sexiftool command
   def self.run_command args, llog
-    msg = "*** Running #{@@ExifCommand} #{args*" "}"
-    $log.info msg; llog << "\n"; llog.info msg    
+    msg = "Running #{@@ExifCommand} #{args*" "} ..."
+    $log.info msg; llog << "\n"; llog.info msg; puts msg  
     begin
       result = system(@@ExifCommand, *args, { :out=>llog.logdev.dev}) #:chdir=>dir,, :err=>llog.logdev.dev
       raise Error if result.nil?
     rescue => e
       msg = e.full_message("#{__method__} - fail to execute #{@@ExifCommand};"); $log.error msg
     end      
-    msg = "*** Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg
+    msg = "Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg; puts msg
   end #run_command
 
   # batch set metadata tags
@@ -673,6 +663,59 @@ class FotoObject
 
     llog.close
   end #batch_fix_fmd
+
+  # batch process txt files
+  def self.batch_process_txt_files file_list, dir, dir_target, dir_backup
+    msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
+    Dir.chdir(dir)
+    dir = File.expand_path(dir)
+    $log.info "*** Processing txt files in #{dir}"
+    if self.collection_real_size <= 0
+      msg = "*** #{__method__}: Nothing to process"; $log.warn msg
+      return   
+    end
+    # build find_and_replace array
+    replace_data = []
+    @@collection.each do |item|
+      if item.errors.empty?
+        name_old = File.basename(item.filename_original)
+        name_new = item.name_ext
+        replace_data << [name_old, name_new]
+      end  
+    end
+    
+    Dir.glob(file_list, File::FNM_CASEFOLD) do |file_in|
+      $log.info "Processing #{file_in}"
+      # backup
+      begin
+        FileUtils.cp(file_in, File.join(dir_backup, file_in))
+      rescue StandardError => e
+        msg = e.full_message("#{__method__} - fail to backup #{file_in};"); $log.error msg
+      else
+        $log.info "   Backed up Ok"
+      end
+      # find-and-replace
+      begin
+        str = File.read(file_in)
+        file_out = File.join(dir_target, file_in)
+        
+        pbar = ProgressBar.new("#{file_in}", replace_data.count)     
+        replace_data.each do |item|
+          str2find = item[0]||""
+          str2replace = item[1]||""
+          str.gsub!(/#{str2find}/i, str2replace)
+          pbar.inc
+        end
+        pbar.finish
+
+        File.write(file_out, str)
+      rescue StandardError => e
+        msg = e.full_message("#{__method__} - fail to process #{file_in};"); $log.error msg
+      else
+        $log.info "   Processed Ok"
+      end           
+    end #glob
+  end #batch_process_txt_files
       
   # Instance attributes and methods
   attr_reader :filename, :filename_original, :metadata

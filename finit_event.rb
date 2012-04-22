@@ -17,16 +17,15 @@ begin #*** GLOBAL BLOCK
   dir_config << File.join(ENV['HOME'], File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME)))
   dir_config << File.dirname($PROGRAM_NAME)
   yaml_config = ARGV[0]||ANBConfig.get_1st_yaml(dir_config, "*#{File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME))}_conf*")
+  options_cfg = ANBConfig.load_yaml yaml_config
 
   # dir to process
   dir_to_process = Dir.pwd
   fail("#{dir_to_process} does not exist") unless File.exist?(dir_to_process) 
   fail("#{dir_to_process} is not a Directory") unless File.directory?(dir_to_process)
 
-  # event profile
-  yaml_event = ANBConfig.get_1st_yaml(["."], "event*")
-   
-  foto_event = FotoEvent.new(yaml_config, yaml_event, dir_to_process)
+  # event profile 
+  foto_event = FotoEvent.new(options_cfg, dir_to_process)
 
   FotoObject.init_collection foto_event
 
@@ -42,6 +41,11 @@ begin #*** GLOBAL BLOCK
   FotoObject.batch_fix_fmd foto_event.dir_tmp
 
   FotoObject.move_files foto_event.dir_target
+  
+  # process txt files
+  if options_cfg[:input_parameter][:txt_files_process]
+    FotoObject.batch_process_txt_files options_cfg[:input_parameter][:txt_files_process_list], dir_to_process, foto_event.dir_target, foto_event.dir_backup
+  end  
       
 
 rescue ANBConfig::FatalError => e
