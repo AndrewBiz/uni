@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -w
 # encoding: UTF-8
 
-VERSION = "0.5.0" #audio files rename with foto files
+VERSION = "0.4.0" #txt files find-and-replace foto-names added
 
 require "rubygems"
 require "yaml"
@@ -282,7 +282,7 @@ class FotoObject
   class Error < StandardError; end
 
   # *** ID Counter ***
-  class ID_counter
+  class ID_counter   
     Limit36 = "zzzzz" # zzzzz= max id during the day
     Limit_per_day = Limit36.to_i(36)
     Limit_per_sec = Limit_per_day/(24.0*3600.0)  
@@ -359,8 +359,10 @@ class FotoObject
     fmask = "*.{#{event.foto_ext * ","}}"
     $log.info "Initial scan DIR: #{event.dir_original}, MASK: #{fmask}"
     # fake loop - to count files
-    ffiles = Dir.glob(fmask, File::FNM_CASEFOLD)
-    files2process = ffiles.size
+    files2process = 0
+    Dir.glob(fmask, File::FNM_CASEFOLD) do |file|
+      files2process += 1
+    end
     if files2process <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
       return   
@@ -368,36 +370,14 @@ class FotoObject
     # real loop
     msg = "Files to process: #{files2process}"; $log.info msg
     pbar = ProgressBar.new("Initial scan", files2process)
-    ffiles.each do |file|
+    Dir.glob(fmask, File::FNM_CASEFOLD) do |file|
       $log.info "Initializing #{file}"
       self.new(file, event)
       pbar.inc
     end #glob
     pbar.finish
     $stderr.puts "! Some files have metadata conflicts. See log" if @@metadata_conflicts_occured
-    $log.info "*** TOTAL foto files initialized: #{@@collection.count}"
-    # process audio (wav) files
-    amask = "*.wav"
-    $log.info "Scanning for audio files, MASK: #{amask}"
-    alinks = 0
-    afiles = Dir.glob(amask, File::FNM_CASEFOLD)
-    pbar = ProgressBar.new("Audio scan", afiles.size)
-    afiles.each do |afile|
-      $log.info "Processing #{afile}"
-      aextention = File.extname afile
-      aname = File.basename afile, aextention
-      @@collection.each do |f| 
-        if f.name.upcase == aname.upcase
-          f.audio_name = aname
-          f.audio_extention = aextention
-          alinks += 1
-        end
-      end    
-      pbar.inc
-    end
-    pbar.finish
-    $log.info "*** TOTAL audio files linked: #{alinks}"
-    #@@collection.each {|f| puts "FOTO: #{f.name+f.extention}, audio=#{f.audio_name}#{f.audio_extention}"}
+    $log.info "*** TOTAL files initialized: #{@@collection.count}"
   end
 
   # Batch backup files
@@ -741,7 +721,7 @@ class FotoObject
   attr_reader :filename, :filename_original, :metadata
   attr_reader :name, :name_target, :extention
   attr_reader :date_time_original, :dto_need2set 
-  attr_accessor :errors, :metadata_conflicts, :audio_name, :audio_extention
+  attr_accessor :errors, :metadata_conflicts
   attr_reader :backed_up, :session_id, :id36, :date_time_initialized, :author_nickname
   
   # Class constructor
@@ -750,7 +730,6 @@ class FotoObject
     @errors = []
     @metadata_conflicts = [] #:creator :copyright :keywords :location_created :gps_created :collection_name :collection_uri
     @backed_up = false
-    @audio_name = nil; @audio_extention=nil
     @extention = File.extname filename
     @name = File.basename filename, extention
 
@@ -849,11 +828,6 @@ class FotoObject
     begin
       filename_backup = File.join(dir_backup, name_ext)
       FileUtils.cp(@filename_original, filename_backup)
-      #backup audio
-      if not @audio_name.nil?
-        afilename_backup = File.join(dir_backup, @audio_name+@audio_extention)
-        FileUtils.cp(@audio_name+@audio_extention, afilename_backup)
-      end      
     rescue StandardError => e
       add_error e.full_message(name_ext) 
       @backed_up = false 
@@ -871,20 +845,13 @@ class FotoObject
     return true if filename_target == @filename # already moved
 
     begin
-      FileUtils.mv(@filename, filename_target)
-      #backup audio
-      if not @audio_name.nil?
-        afilename_target = File.join(dir, @name_target+@audio_extention)
-        FileUtils.mv(@audio_name+@audio_extention, afilename_target)
-      end  
-      
+      FileUtils.mv(@filename, filename_target) 
     rescue StandardError => e
       add_error e.full_message(name_ext) 
       return false 
     else
       @filename = filename_target
       @name = @name_target
-      @audio_name = @name_target if not @audio_name.nil?
       return true
     end
   end  
