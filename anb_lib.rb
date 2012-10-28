@@ -7,7 +7,7 @@ require "json"
 require "date"
 require "logger"
 require "fileutils"
-require "mini_exiftool" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
+require_relative "mini_exiftool_fork" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
 require_relative "progressbar" 
 #TODO optionparser
 

@@ -13,3 +13,13 @@ dif:
   :author_nikname: "DIF" #used in file name
   :creator: ["Unknown author"] # MWG:Creator
   :copyright: "(c) Unknown author" # MWG:Copyright
+
+dim:
+  :author_nikname: "DIM" #used in file name
+  :creator: ["Dmitry Bizyaev (photographer)", "Dmitry Bizyaev (camera owner)"] # MWG:Creator
+  :copyright: "(c) Dmitry Bizyaev. All Rights Reserved." # MWG:Copyright
+
+nat:
+  :author_nikname: "NAT" #used in file name
+  :creator: ["Natalia Bizyaeva (photographer)", "Natalia Bizyaeva (camera owner)"] # MWG:Creator
+  :copyright: "(c) Natalia Bizyaeva. All Rights Reserved." # MWG:Copyright

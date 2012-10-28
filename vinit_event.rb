@@ -40,7 +40,8 @@ class Video < ANB_exiftool
     else
       name_clean = @name
     end
-    return opts[:date_time_original].strftime('%Y%m%d-%H%M')+"_#{opts[:author_nikname]}_#{opts[:file_format]}#{name_clean}" 
+#    opts[:date_time_original].strftime('%Y%m%d-%H%M%S')+"_#{opts[:author_nikname]}_#{opts[:file_format]}#{name_clean}" 
+    opts[:date_time_original].strftime('%Y%m%d-%H%M%S')+"_#{opts[:author_nikname]} #{name_clean}" 
   end
 
   
@@ -71,7 +72,7 @@ begin #*** GLOBAL BLOCK
 
   Video.check_collection(event: event)
 
-  Video.backup_files dir_backup 
+#  Video.backup_files dir_backup 
 
   dir_target = File.join(dir_target_parent, event.directory_name)
   Video.move_files dir_target
