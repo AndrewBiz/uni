@@ -1,8 +1,23 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby -U
 # encoding: UTF-8
 require_relative "foto_lib.rb"
+require "docopt"
 
 # ********** MAIN PROGRAM **********
+usage = <<DOCOPT
+Init foto event program, version #{VERSION}
+Usage:
+  #{File.basename(__FILE__)} [-e EVT] [-a NICKNAME]
+  #{File.basename(__FILE__)} -h | --help
+  #{File.basename(__FILE__)} --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  -e EVT --event=EVT  Event profile to use [default: ./event.yml]
+  -a NICKNAME --author=NICKNAME  Author nickname
+DOCOPT
+
 begin #*** GLOBAL BLOCK
   $log = ANBLogger.new(File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME))+".log")
   $log.level = ANBLogger::INFO #DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
@@ -11,12 +26,13 @@ begin #*** GLOBAL BLOCK
   $log.info "VERSION #{VERSION}"
 
   # init program parameters
+  options_cli = Docopt::docopt(usage, version: VERSION) 
 
   # program configuration
   dir_config = ["."]
   dir_config << File.join(ENV['HOME'], File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME)))
   dir_config << File.dirname($PROGRAM_NAME)
-  yaml_config = ARGV[0]||ANBConfig.get_1st_yaml(dir_config, "*#{File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME))}_conf*")
+  yaml_config = ANBConfig.get_1st_yaml(dir_config, "*#{File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME))}_conf*")
   options_cfg = ANBConfig.load_yaml yaml_config
 
   # dir to process
@@ -25,7 +41,7 @@ begin #*** GLOBAL BLOCK
   fail("#{dir_to_process} is not a Directory") unless File.directory?(dir_to_process)
 
   # event profile 
-  foto_event = FotoEvent.new(options_cfg, dir_to_process)
+  foto_event = FotoEvent.new(options_cfg, options_cli, dir_to_process)
 
   FotoObject.init_collection foto_event
 
@@ -47,6 +63,9 @@ begin #*** GLOBAL BLOCK
     FotoObject.batch_process_txt_files options_cfg[:input_parameter][:txt_files_process_list], dir_to_process, foto_event.dir_target, foto_event.dir_backup
   end  
       
+
+rescue Docopt::Exit => e
+  puts e.message
 
 rescue ANBConfig::FatalError => e
   $log.fatal e.full_message 

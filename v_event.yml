@@ -2,7 +2,7 @@
 # Паспорт видеособытия. Внимание! Кодировка файла должна быть UTF-8
 ---
 :event:
-  :title: "Video_event" # Место Краткое название события (mwg_coll:CollectionName)
+  :title: "Video" # Место Краткое название события (mwg_coll:CollectionName)
   
 # Период события
   :date_start: "2000-01-01 00:00:00" #YYYY-mm-dd HH:MM:SS

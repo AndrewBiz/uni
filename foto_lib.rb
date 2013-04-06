@@ -1,7 +1,7 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby -U
 # encoding: UTF-8
 
-VERSION = "0.5.0" #audio files rename with foto files
+VERSION = "0.6.0"
 
 require "rubygems"
 require "yaml"
@@ -109,11 +109,12 @@ class FotoEvent
 
 
   # Event initialize 
-  def initialize options_cfg={}, dir_to_process=File.pwd
+  def initialize( options_cfg={}, options_cli={}, dir_to_process=File.pwd)
     $log.info "*** Initializing event"
 
     # read from event profile
-    @yaml_event = ANBConfig.get_1st_yaml(["."], "event*")
+#    @yaml_event = ANBConfig.get_1st_yaml(["."], "event")
+    @yaml_event = options_cli['--event']
     options_evt = ANBConfig.load_yaml @yaml_event
     
     @foto_ext = options_cfg[:input_parameter][:foto_ext]||["jpg"]
@@ -166,7 +167,7 @@ class FotoEvent
     @keywords.delete_if {|v| v.empty?}
 
     # creator\copyright
-    alias_creator_copyright = options_evt[:event][:alias_creator_copyright]||""
+    alias_creator_copyright = options_cli['--author']||options_evt[:event][:alias_creator_copyright]||""
     if alias_creator_copyright.empty?
       #read from event.yaml
       @author_nikname = options_evt[:event][:author_nikname]||""
