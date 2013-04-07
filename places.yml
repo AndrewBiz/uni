@@ -211,7 +211,7 @@ peterburg:
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Санкт-Петербург" # MWG:State  Регион, область
     :city: "Санкт-Петербург" # MWG:City  Город
-    :location: "Дворцовая площадь" # MWG:Location - Район, местность
+    :location: "Дворцовая пл." # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "59 56 21.069" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South

@@ -1,14 +1,15 @@
 #!/usr/bin/env ruby -U
 # encoding: UTF-8
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 
 require "rubygems"
 require "yaml"
 require "date"
 require "logger"
 require "fileutils"
-require_relative "mini_exiftool_fork" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
+#require "mini_exiftool"
+require_relative "mini_exiftool-1.6.0" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
 require_relative "progressbar" 
 # require "progressbar" # gem install progressbar (https://github.com/jfelchner/ruby-progressbar)
 #TODO optionparser
@@ -111,9 +112,8 @@ class FotoEvent
   # Event initialize 
   def initialize( options_cfg={}, options_cli={}, dir_to_process=File.pwd)
     $log.info "*** Initializing event"
-
+    
     # read from event profile
-#    @yaml_event = ANBConfig.get_1st_yaml(["."], "event")
     @yaml_event = options_cli['--event']
     options_evt = ANBConfig.load_yaml @yaml_event
     
@@ -165,6 +165,12 @@ class FotoEvent
     end  
     @keywords.uniq!
     @keywords.delete_if {|v| v.empty?}
+    # Keywords: string[0,64]+
+    max_bytesize = 64
+    @keywords.each do |v|
+      val_bytesize = v.bytesize
+      raise FatalError, "keyword '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
+    end
 
     # creator\copyright
     alias_creator_copyright = options_cli['--author']||options_evt[:event][:alias_creator_copyright]||""
@@ -190,6 +196,19 @@ class FotoEvent
       end
     end
     @copyright = "#{@date_start.year} " + @copyright
+
+    # By-line: string[0,32]+
+    max_bytesize = 32
+    @creator.each do |v|
+      val_bytesize = v.bytesize
+      raise FatalError, "Creator '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
+    end
+
+    # CopyrightNotice: strung[0,128]
+    max_bytesize = 128
+    v = @copyright
+    val_bytesize = v.bytesize
+    raise FatalError, "Copyright '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
 
     # place_created
     alias_place_created = options_evt[:event][:alias_place_created]||""
@@ -217,6 +236,24 @@ class FotoEvent
         raise FatalError, e.full_message(" - Parsing YAML #{yaml}; ")
       end
     end
+
+    # Sub-location: string[0,32]
+    max_bytesize = 32
+    v = @location_created[:location]
+    val_bytesize = v.bytesize
+    raise FatalError, "Location '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
+
+    # Province-State: string[0,32]
+    max_bytesize = 32
+    v = @location_created[:state]
+    val_bytesize = v.bytesize
+    raise FatalError, "Location '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
+
+    # Country-PrimaryLocationName: string[0,64]
+    max_bytesize = 64
+    v = @location_created[:country]
+    val_bytesize = v.bytesize
+    raise FatalError, "Country '#{v}' is #{val_bytesize-max_bytesize} bytes longer than allowed #{max_bytesize}" if val_bytesize > max_bytesize
 
     begin # create\check event directories
       @dir_original = File.expand_path(dir_to_process)
