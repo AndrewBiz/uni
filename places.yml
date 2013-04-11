@@ -7,7 +7,7 @@ home: #Moscow - anb's home
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Москва" # MWG:State  Регион, область
     :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово Южное" # MWG:Location - Район, местность
+    :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 31.49" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -41,7 +41,7 @@ flat_salnikov: #Moscow
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Москва" # MWG:State  Регион, область
     :city: "Москва" # MWG:City  Город
-    :location: "Тропарево-Никулино" # MWG:Location - Район, местность
+    :location: "Тропарево-Никул." # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 39 32.14" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -58,7 +58,24 @@ flat_eremenko: #Moscow
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Москва" # MWG:State  Регион, область
     :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово Южное" # MWG:Location - Район, местность
+    :location: "Орехово-Борисово" # MWG:Location - Район, местность
+  :gps_created:
+    :gps_latitude: "55 36 19.38" #GPSLatitude
+    :gps_latitude_ref: N  #GPSLatitudeRef
+    :gps_longitude: "37 43 33.52" #GPSLongitude
+    :gps_longitude_ref: E #GPSLongitudeRef
+    :gps_altitude: "175.0" #GPSAltitude
+    :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
+
+flat_77: #Moscow
+  :location_created:
+    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+    :world_region: "Europe"
+    :country: "Russia" # MWG:Country Страна
+    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state: "Москва" # MWG:State  Регион, область
+    :city: "Москва" # MWG:City  Город
+    :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 19.38" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -73,7 +90,7 @@ dacha_fenino:
     :world_region: "Europe"
     :country: "Russia" # MWG:Country Страна
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская область" # MWG:State  Регион, область
+    :state: "Московская обл." # MWG:State  Регион, область
     :city: "Серпухов" # MWG:City  Город
     :location: "Фенино" # MWG:Location - Район, местность
   :gps_created:
@@ -90,7 +107,7 @@ dacha_fenino_nara:
     :world_region: "Europe"
     :country: "Russia" # MWG:Country Страна
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская область" # MWG:State  Регион, область
+    :state: "Московская обл." # MWG:State  Регион, область
     :city: "Серпухов" # MWG:City  Город
     :location: "Фенино, Нара" # MWG:Location - Район, местность
   :gps_created:
@@ -160,7 +177,7 @@ smirnoffs: #Moscow
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Москва" # MWG:State  Регион, область
     :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово Северное" # MWG:Location - Район, местность
+    :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 37 25.37" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -447,7 +464,7 @@ tb_podmoskovie:
     :world_region: "Europe"
     :country: "Russia" # MWG:Country Страна
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская область" # MWG:State  Регион, область
+    :state: "Московская обл." # MWG:State  Регион, область
     :city: "Заборье" # MWG:City  Город
     :location: "санаторий Подмосковье" # MWG:Location - Район, местность
   :gps_created:
@@ -498,7 +515,7 @@ flat_razvilka:
     :world_region: "Europe"
     :country: "Russia" # MWG:Country Страна
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская область" # MWG:State  Регион, область
+    :state: "Московская обл." # MWG:State  Регион, область
     :city: "Развилка" # MWG:City  Город
     :location: "дом 43" # MWG:Location - Район, местность
   :gps_created:
@@ -534,13 +551,30 @@ rssl: #Moscow
     :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
     :state: "Москва" # MWG:State  Регион, область
     :city: "Москва" # MWG:City  Город
-    :location: "Бибирево, Пришвина 8" # MWG:Location - Район, местность
+    :location: "Бибирево" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 53 19.83" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "37 35 41.80" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
     :gps_altitude: "160.0" #GPSAltitude
+    :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
+
+yaroslavl:
+  :location_created:
+    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+    :world_region: "Europe"
+    :country: "Russia" # MWG:Country Страна
+    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state: "Ярославль" # MWG:State  Регион, область
+    :city: "Ярославль" # MWG:City  Город
+    :location: "Центр" # MWG:Location - Район, местность
+  :gps_created:
+    :gps_latitude: "57 38 00.00" #GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: "39 52 42.00" #GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "104.0" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 krokusexpo: #Moscow

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -U
 # encoding: UTF-8
 
-VERSION = "0.7.0"
+VERSION = "0.8.0"
 
 require "rubygems"
 require "yaml"
@@ -12,7 +12,6 @@ require "fileutils"
 require_relative "mini_exiftool-1.6.0" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
 require_relative "progressbar" 
 # require "progressbar" # gem install progressbar (https://github.com/jfelchner/ruby-progressbar)
-#TODO optionparser
 
 # *** Standard Ruby class - anb alter ***
 class Exception
@@ -633,15 +632,19 @@ class FotoObject
             end
           end 
 
-          # collection_name
+          # collection_name and XPSubject
           collection_name = opts[:collection_name]||""
           f.puts %Q{-XMP:CollectionName-=#{collection_name}}        
           f.puts %Q{-XMP:CollectionName+=#{collection_name}} 
+          f.puts %Q{-XPSubject=#{collection_name}}        
 
           # collection_uri
           collection_uri = opts[:collection_uri]||""
           f.puts %Q{-XMP:CollectionURI-=#{collection_uri}}        
           f.puts %Q{-XMP:CollectionURI+=#{collection_uri}} 
+
+          # image_unique_id
+          f.puts %Q{-ImageUniqueID=#{foto.image_unique_id}}        
 
           #General
           f.puts %Q{-v}
@@ -780,7 +783,7 @@ class FotoObject
   attr_reader :name, :name_target, :extention
   attr_reader :date_time_original, :dto_need2set 
   attr_accessor :errors, :metadata_conflicts, :audio_name, :audio_extention
-  attr_reader :backed_up, :session_id, :id36, :date_time_initialized, :author_nickname
+  attr_reader :backed_up, :id36, :image_unique_id, :date_time_initialized, :author_nickname
   
   # Class constructor
   def initialize filename, event
@@ -796,9 +799,9 @@ class FotoObject
     @filename_original = @filename
 
     @@id.next    
-    @session_id = @@id.num
     @id36 = @@id.counter36
-
+    
+    @image_unique_id = "#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(7,'0')}"
     @author_nikname = event.author_nikname
     
     # read exif info
@@ -949,11 +952,11 @@ class FotoObject
 
     name_prefix = %Q{#{@date_time_original.strftime('%Y%m%d-%H%M%S')}_#{@author_nikname}}
 
-    # check if name = YYYYMMDD-hhmmss-AAA[ID]name
-    if (/^(\d{8}-\d{6}_\w{3,6})(\[.*)/ =~ @name)
+    # check if name = YYYYMMDD-hhmmss_AAA[ID]name
+    if (/^(\d{8}-\d{6}_\w{3,6})(.*)/ =~ @name)
       return name_prefix+"#{$2}"
     end
-    # check if file already renamed to YYYYMMDD-hhmm-AAA[AAA] format
+    # check if file already renamed to old YYYYMMDD-hhmm_AAA[AAA] format
     if (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
       name = $2      
     elsif (/^(\d{8}-\d{4}-\w{3,6}_)(.*)/ =~ @name)
@@ -970,7 +973,8 @@ class FotoObject
     end
 
     if template[:name_id].empty?
-      name_id = %Q{[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,"0")}]}
+      #name_id = %Q{[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,"0")}]}
+      name_id = " "
     else
       name_id = eval "\"#{template[:name_id]}\""
     end

@@ -8,6 +8,7 @@
   :dir_assets: ["/Users/anb/Dropbox/dev/uni/"] # OPTIONAL folder(s) with configs, places.yml, creators.yml etc (in Win32 use / instead of \)
 
 #  :name_id_template: "[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,'0')}]"
+  :name_id_template: " " #"[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,'0')}]"
   :name_suffix_template: "#{name}" #"{$}(#{name})" #will be added to filename after ID
   
   :force_set_dto: true #true or false. if true - date_time_original = 00.00.00 will be replaced with event.date_start + delta
