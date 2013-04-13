@@ -1,1 +1,23 @@
-.swp
+## MAC OS
+.DS_Store
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+tags
+
+## PROJECT::GENERAL
+rdoc
+
+## PROJECT::SPECIFIC
+tmp
+.bundle
+Gemfile.lock

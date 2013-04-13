@@ -88,7 +88,7 @@ class MiniExiftool
     opt_params << (@numerical ? '-n ' : '')
     opt_params << (@composite ? '' : '-e ')
     opt_params << (@convert_encoding ? '-L ' : '')
-    cmd = %Q(#@@cmd -q -q -s -t #{opt_params} #{@@sep_op} #{filename}) #ANB deleted Shellwords.escape(
+    cmd = %Q(#@@cmd -q -q -s -t #{opt_params} #{@@sep_op} "#{filename}") #ANB deleted Shellwords.escape(
     if run(cmd)
       parse_output
     else
@@ -160,13 +160,13 @@ class MiniExiftool
       arr_val.map! {|e| convert e}
       tag_params = ''
       arr_val.each do |v|
-        tag_params << %Q(-#{original_tag}=#{v.to_s} ) #ANB deleted Shellwords.escape(
+        tag_params << %Q(-#{original_tag}="#{v.to_s}" ) #ANB deleted Shellwords.escape(
       end
       opt_params = ''
       opt_params << (arr_val.detect {|x| x.kind_of?(Numeric)} ? '-n ' : '')
       opt_params << (@convert_encoding ? '-L ' : '')
       opt_params << (@ignore_minor_errors ? '-m' : '')
-      cmd = %Q(#@@cmd -q -P -overwrite_original #{opt_params} #{tag_params} #{temp_filename})
+      cmd = %Q(#@@cmd -q -P -overwrite_original #{opt_params} #{tag_params} "#{temp_filename}")
       if convert_encoding && cmd.respond_to?(:encode)
         cmd.encode('ISO-8859-1')
       end

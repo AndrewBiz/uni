@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -U
 # encoding: UTF-8
 
-VERSION = "0.8.0"
+VERSION = "0.8.1"
 
 require "rubygems"
 require "yaml"
@@ -541,7 +541,7 @@ class FotoObject
      
     # generate ARGFILE for exiftool
     total = 0
-    File.open(script_name, "w+") do |f|
+    File.open(script_name, "w+:utf-8") do |f|
       f.puts %Q{# #{@@ExifCommand} #{args*" "}}
       pbar = ProgressBar.new("Preparing", @@collection.count)
       @@collection.each do |foto|
@@ -636,7 +636,7 @@ class FotoObject
           collection_name = opts[:collection_name]||""
           f.puts %Q{-XMP:CollectionName-=#{collection_name}}        
           f.puts %Q{-XMP:CollectionName+=#{collection_name}} 
-          f.puts %Q{-XPSubject=#{collection_name}}        
+          #f.puts %Q{-XPSubject=#{collection_name}} #ANB does not work ok in Windows
 
           # collection_uri
           collection_uri = opts[:collection_uri]||""
@@ -694,7 +694,7 @@ class FotoObject
      
     # generate ARGFILE for exiftool
     total = 0
-    File.open(script_name, "w+") do |f|
+    File.open(script_name, "w+:utf-8") do |f|
       f.puts %Q{# #{@@ExifCommand} #{args*" "}}
       pbar = ProgressBar.new("Preparing", @@collection.count)
       @@collection.each do |foto|
