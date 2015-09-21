@@ -1,0 +1,14 @@
+anb:
+  :author_nikname: "ANB"                                                        #used in file name
+  :creator: ["Andrey Bizyaev (photographer)", "Andrey Bizyaev (camera owner)"]  # MWG:Creator
+  :copyright: "(c) Andrey Bizyaev. All Rights Reserved."                        # MWG:Copyright
+
+msv:
+  :author_nikname: "MSV"                                                        #!Автор медиа - used in file name
+  :creator:        ["Masyuk Sergey (photographer)"]                             #!Автор медиа - MWG:Creator
+  :copyright:      "(c) Sergey Masyuk. All Rights Reserved."                    #!Автор медиа - MWG:Copyright
+
+mns:
+  :author_nikname: "MNS"                                                        #!Автор медиа - used in file name
+  :creator:        ["Masyuk Natalia (photographer)"]                            #!Автор медиа - MWG:Creator
+  :copyright:      "(c) Natalia Masyuk. All Rights Reserved."                   #!Автор медиа - MWG:Copyright

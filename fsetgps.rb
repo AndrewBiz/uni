@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby -w
 # encoding: UTF-8
+# Andrew Bizyaev Андрей Бизяев
+
 require_relative "anb_lib.rb"
 
 # ********** MAIN PROGRAM **********

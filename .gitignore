@@ -21,3 +21,5 @@ rdoc
 tmp
 .bundle
 Gemfile.lock
+
+*.log

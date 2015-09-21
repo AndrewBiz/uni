@@ -1,0 +1,58 @@
+# Event profile. Attention! File code page should be UTF-8
+# Паспорт события. Внимание! Кодировка файла должна быть UTF-8
+---
+:event:
+  :title: "Дома 1е кадры Sony SLT-A65V" # Место Краткое название события (XMP:CollectionName)
+  :sort: "_01" #OPTIONAL event sort order - if several events in one day 
+  :uri: "anblab.net/" # XMP:CollectionURI - адрес фотки в интернете
+  
+# Период события
+  :date_start: "2011-11-02 00:00:00" #YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+  :date_end: "2011-11-02 23:59:00" # OPTIONAL YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+  
+# **** Информация будет внесена в EXIF теги фотографий:
+# Ключевые слова 
+  :keywords: # XMP:Subject (MWG:Keywords)
+    # Описание события (Что? Объект)     
+    :what: ["портрет", "кошки"]
+    # Перечень участников (Кто? Субъект)
+    :who: ["Бизяевы", "семья"] 
+    # Описание места/мест (Где? Место)
+    :where: ["квартира Бизяевых"] 
+    # Описание времени (Когда? Время)
+    :when: ["вечер", "осень"]
+    # Описание причины и цели (Почему?/Зачем? Цель/Причина)
+    :why: ["просто фотки"]
+    # Каково было?
+    :how: [""]
+    # Метод получения изображения
+    :method: [""] #camera, scanner - Чем?/Как? Средство/Способ
+
+# Автор фотографий
+  :alias_creator_copyright: anb	#creator, nikname, copyright will be taken from creators.yml
+ 
+#  :author_nikname: "ANB" #used in file name
+#  :creator: ["Andrey Bizyaev (photographer)", "Andrey Bizyaev (camera owner)"] # MWG:Creator
+#  :copyright: "(c) Copyright Andrey Bizyaev. All Rights Reserved." # MWG:Copyright
+   
+# Место создания снимка
+  :alias_place_created: home	#location_created and gps_created will be taken from locations.yml
+
+#  :location_created:
+#    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal 
+#    :world_region: "Europe" # XMP:LocationCreatedWorldRegion
+#    :country: "Russia" # MWG:Country Страна
+#    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+#    :state: "Москва" # MWG:State  Регион, область
+#    :city: "Москва" # MWG:City  Город
+#    :location: "Воронежская ул 6" # MWG:Location - Район, местность
+
+# Координаты места создания снимка
+#  :gps_created:
+#    :gps_latitude: "55 36 31.49" #GPSLatitude=55 deg 37' 25.37"
+#    :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
+#    :gps_longitude: "37 43 28.27" #GPSLongitude=37 deg 43' 12.75"
+#    :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
+#    :gps_altitude: "170.0" #GPSAltitude
+#    :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
+    

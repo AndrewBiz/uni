@@ -1,0 +1,14 @@
+---
+:input_parameter:
+  :foto_ext: ["jpg", "orf"] #foto extentions
+  :dir_target_parent: "." # OPTIONAL parent folder for the output folder (in Win32 only ASCII allowed!)
+  :dir_backup: "backup" # OPTIONAL folder for back up files before processing (in Win32 only ASCII allowed!) 
+  :dir_tmp: "tmp" # OPTIONAL tmp folder for processing (in Win32 only ASCII allowed!) 
+
+  :dir_assets: ["."] # OPTIONAL folder(s) with configs, places.yml, creators.yml etc (in Win32 use / instead of \)
+
+#  :name_id_template: "[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,'0')}]"
+  :name_suffix_template: "{$}(#{name})" #will be added to filename after ID
+  
+  :force_set_dto: true #true or false. if true - date_time_original = 00.00.00 will be replaced with event.date_start + delta
+  :delta_dto: 18 #seconds. Delta is used for force_set_date_time_original parameter

@@ -36,6 +36,7 @@ class MiniExiftool
   VERSION = '1.6.0'
 
   # +opts+ support at the moment
+
   # * <code>:numerical</code> for numerical values, default is +false+
   # * <code>:composite</code> for including composite tags while loading,
   #   default is +true+

@@ -1,0 +1,35 @@
+# Event profile. Attention! File code page should be UTF-8
+# Паспорт события. Внимание! Кодировка файла должна быть UTF-8
+---
+:event:
+  :title: "Дома 1е кадры Sony SLT-A65V" # Место Краткое название события (XMP:CollectionName)
+  :sort: "_1" #OPTIONAL event sort order - if several events in one period 
+  :uri: "anblab.net/" # XMP:CollectionURI - адрес фотки в интернете
+  
+# Период события
+  :date_start: "2011-11-02 00:00:00" #YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+  :date_end: "2011-11-02 23:59:00" # OPTIONAL YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+  
+# **** Информация будет внесена в EXIF теги фотографий:
+# Ключевые слова 
+  :keywords: # XMP:Subject (MWG:Keywords)
+    # Описание события (Что? Объект)     
+    :what: ["портрет", "кошки"]
+    # Перечень участников (Кто? Субъект)
+    :who: ["Бизяевы", "семья"] 
+    # Описание места/мест (Где? Место)
+    :where: ["квартира Бизяевых"] 
+    # Описание времени (Когда? Время)
+    :when: ["вечер", "осень"]
+    # Описание причины и цели (Почему?/Зачем? Цель/Причина)
+    :why: ["просто фотки"]
+    # Каково было?
+    :how: [""]
+    # Метод получения изображения
+    :method: [""] #camera, scanner - Чем?/Как? Средство/Способ
+
+# Автор фотографий
+  :alias_creator_copyright: anb	#creator, nikname, copyright will be taken from creators.yml
+ 
+# Место создания снимка
+  :alias_place_created: home	#location_created and gps_created will be taken from locations.yml

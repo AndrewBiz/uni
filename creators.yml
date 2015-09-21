@@ -4,6 +4,21 @@ anb:
   :creator: ["Andrey Bizyaev (photographer)", "Andrey Bizyaev (camera owner)"] # MWG:Creator
   :copyright: "(c) Andrey Bizyaev. All Rights Reserved." # MWG:Copyright
 
+bnp:
+  :author_nikname: "BNP" #used in file name
+  :creator: ["Nina Bizyaeva (photographer)", "Nina Bizyaeva (camera owner)"] # MWG:Creator
+  :copyright: "(c) Nina Bizyaeva. All Rights Reserved." # MWG:Copyright
+
+bma:
+  :author_nikname: "BMA" #used in file name
+  :creator: ["Maria Beldyagina (photographer)", "Maria Beldyagina (camera owner)"] # MWG:Creator
+  :copyright: "(c) Maria Beldyagina. All Rights Reserved." # MWG:Copyright
+
+sbo:
+  :author_nikname: "SBO" #used in file name
+  :creator: ["Alexander Bocharov (photo)", "Alexander Bocharov (camera)"] # MWG:Creator
+  :copyright: "(c) Alexander Bocharov. All Rights Reserved." # MWG:Copyright
+
 msv:
   :author_nikname: "MSV" #used in file name
   :creator: ["Sergei Masyuk (photographer)", "Sergei Masyuk (camera owner)"] # MWG:Creator
@@ -43,4 +58,14 @@ aeb:
   :author_nikname: "AEB" #used in file name
   :creator: ["Erik Akpeisov (photographer)", "Erik Akpeisov (camera owner)"] # MWG:Creator
   :copyright: "(c) Erik Akpeisov. All Rights Reserved." # MWG:Copyright
+
+vvb:
+  :author_nikname: "VVB" #used in file name
+  :creator: ["Vladimir Bizyaev (photographer)", "Vladimir Bizyaev (camera owner)"] # MWG:Creator
+  :copyright: "(c) Vladimir Bizyaev. All Rights Reserved." # MWG:Copyright
+
+pol:
+  :author_nikname: "POL" #used in file name
+  :creator: ["Polina Bizyaeva"]
+  :copyright: "(c) Polina Bizyaeva. All Rights Reserved."
 

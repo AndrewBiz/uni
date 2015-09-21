@@ -1,0 +1,130 @@
+#-------------------------------------------------------------------------------# Место события копируется полностью из подготовленных ранее описаний
+# Долгопрудный -----------------------------------------------------------------
+dolgop:
+  :location_created:
+    :time_zone:        "+04:00"                                                 # +/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region:     "Europe"                                                 # TODO
+    :country:          "Russia"                                                 # MWG:Country Страна
+    :country_code:     "RU"                                                     # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:            "Московская область"                                     # MWG:State  Регион, область
+    :location:         ""                                                       # MWG:Location - Район, местность
+    :city:             "Долгопрудный"                                           # MWG:City  Город/населённый пункт
+
+  :gps_created:
+    :gps_latitude:        "55 55 38.00"                                         # GPSLatitude
+    :gps_latitude_ref:    N                                                     # GPSLatitudeRef
+    :gps_longitude:       "37 30 24.00"                                         # GPSLongitude
+    :gps_longitude_ref:   E                                                     # GPSLongitudeRef
+    :location:            ""                                                    # MWG:Location - Район, местность
+    :gps_altitude:        "180.0"                                               # GPSAltitude
+
+# Москва -----------------------------------------------------------------------
+moscow:
+  :location_created:
+    :time_zone:        "+04:00"                                                 # +/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region:     "Europe"                                                 # TODO
+    :country:          "Russia"                                                 # MWG:Country Страна
+    :country_code:     "RU"                                                     # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:            "Москва"                                                 # MWG:State  Регион, область
+    :city:             "Москва"                                                 # MWG:City  Город
+    :location:         "Орехово-Борисово Южное"                                 # MWG:Location - Район, местность
+
+  :gps_created:
+    :gps_latitude:        "55 45 00.00"                                         # GPSLatitude
+    :gps_latitude_ref:    N                                                     # GPSLatitudeRef
+    :gps_longitude:       "37 36 00.00"                                         # GPSLongitude
+    :gps_longitude_ref:   E                                                     # GPSLongitudeRef
+    :gps_altitude:        "170.0"                                               # GPSAltitude
+    :gps_altitude_ref:    "Above Sea Level"                                     # GPSAltitudeRef
+
+# Павлодар - Pavlodar ----------------------------------------------------------
+pavlodar:  
+  :location_created:                                                            # Место события                                                            
+    :time_zone:  "+06:00"                                                       #!+/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region: "Asia"                                                       # TODO
+    :country:      "Kazakhstan"                                                 # MWG:Country Страна
+    :country_code: "KZ"                                                         # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:        "Павлодарская"                                               # MWG:State  Регион, область
+    :location:     ""                                                           # MWG:Location - Район, местность
+    :city:         "Павлодар"                                                   # MWG:City  Город, населенный пункт
+  :gps_created:                                                                 # Координаты места создания снимка
+    :gps_latitude: "52 18 03.77"                                                # GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: N                                                        # GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: "76 57 44.49"                                               # GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: E                                                       # GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "125.0"                                                      # GPSAltitude
+    :gps_altitude_ref: "Above Sea Level"                                        # GPSAltitudeRef=Below Sea Level
+
+# Новый Уоян -------------------------------------------------------------------
+uoyan:  
+  :location_created:                                                            # Место события                                                            
+    :time_zone:  "+09:00"                                                       #!+/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region: "Asia"                                                       # TODO
+    :country:      "Russia"                                                     # MWG:Country Страна
+    :country_code: "RU"                                                         # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:        "Бурятия"                                                    # MWG:State  Регион, область
+    :location:     "Северобайкальский район"                                    # MWG:Location - Район, местность
+    :city:         "Новый Уоян"                                                 # MWG:City  Город, населенный пункт
+  :gps_created:                                                                 # Координаты места создания снимка
+    :gps_latitude: "56 08 20.86"                                                # GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: N                                                        # GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: "111 43 52.41"                                              # GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: E                                                       # GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "512.0"                                                      # GPSAltitude
+    :gps_altitude_ref: "Above Sea Level"                                        # GPSAltitudeRef=Below Sea Level
+
+# Аксу (Павлодарская область) --------------------------------------------------
+aksu:  
+  :location_created:                                                            # Место события                                                            
+    :time_zone:  "+06:00"                                                       #!+/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region: "Asia"                                                       # TODO
+    :country:      "Kazakhstan"                                                 # MWG:Country Страна
+    :country_code: "KZ"                                                         # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:        "Павлодарская"                                               # MWG:State  Регион, область
+    :location:     "Аксуский"                                                   # MWG:Location - Район, местность
+    :city:         "Аксу"                                                       # MWG:City  Город, населенный пункт
+  :gps_created:                                                                 # Координаты места создания снимка
+    :gps_latitude: "52 02 00.00"                                                # GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: N                                                        # GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: "76 55 00.00"                                               # GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: E                                                       # GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "125.0"                                                      # GPSAltitude
+    :gps_altitude_ref: "Above Sea Level"                                        # GPSAltitudeRef=Below Sea Level
+
+#Vientam - Saigon --------------------------------------------------------------
+saigon:
+  :location_created:
+    :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region: "Asia" # TODO
+    :country: "Vietnam" # MWG:Country Страна
+    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state: "Ho Chi Minh" # MWG:State  Регион, область
+    :city: "Saigon" # MWG:City  Город
+    :location: "District 1" # MWG:Location - Район, местность
+
+  :gps_created:
+    :gps_latitude: "10 49 08.13" #GPSLatitude
+    :gps_latitude_ref: N #GPSLatitudeRef
+    :gps_longitude: "106 39 19.26" #GPSLongitude
+    :gps_longitude_ref: E #GPSLongitudeRef
+    :gps_altitude: "20.0" #GPSAltitude
+    :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
+
+#Владимир  --------------------------------------------------------------
+vladimir:
+  :location_created:
+    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal 
+    :world_region: "Europe"                                                     # +/-HH:MM used for MWG:DateTimeOriginal 
+    :country: "Russia"                                                          # MWG:Country Страна
+    :country_code:     "RU"                                                     # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+    :state:            "Владимирская облась"                                    # MWG:State  Регион, область
+    :location:         ""                                                       # MWG:Location - Район, местность
+    :city:             "Владимир"                                               # MWG:City  Город/населённый пункт
+
+  :gps_created:
+    :gps_latitude: "56 08 00.00"                                                #GPSLatitude
+    :gps_latitude_ref: N                                                        #GPSLatitudeRef
+    :gps_longitude: "40 25 00.00"                                               #GPSLongitude
+    :gps_longitude_ref: E                                                       #GPSLongitudeRef
+    :gps_altitude: "150.0"                                                      #GPSAltitude
+    :gps_altitude_ref: "Above Sea Level"                                        #GPSAltitudeRef

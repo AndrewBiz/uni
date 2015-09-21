@@ -1,6 +1,9 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby -U
 # encoding: UTF-8
 require_relative "anb_lib.rb"
+require 'docopt'
+
+VERSION = "0.2.0"
 
 # Video Class
 class Video < ANB_exiftool
@@ -10,8 +13,8 @@ class Video < ANB_exiftool
     begin
       event = opts[:event]
       dto = @metadata[:date_time_original]||@metadata[:create_date]||nil
-      raise Error, "- date_time_original = 00.00.00;" unless dto
-      raise Error, "- date_time_original NOT in event dates;" unless (dto >= event.date_start) and (dto <= event.date_end)
+      #raise Error, "- date_time_original = 00.00.00;" unless dto
+      #raise Error, "- date_time_original NOT in event dates;" unless (dto >= event.date_start) and (dto <= event.date_end)
 
       file_format = event.options[:event][:file_format]||""
       file_format = file_format + "_" unless file_format.empty?
@@ -57,15 +60,31 @@ begin #*** GLOBAL BLOCK
   $log << "\n"
   $log.info "****** STARTING command #{$PROGRAM_NAME} #{ARGV.inspect}"
 
-  # input parameters
-  dir_to_process, yaml_name = read_input_params
+usage = <<DOCOPT
+Init foto event program, version #{VERSION}
+Usage:
+  #{File.basename(__FILE__)} [-e EVENT] [-a NICKNAME]
+  #{File.basename(__FILE__)} -h | --help
+  #{File.basename(__FILE__)} --version
 
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  -a NICKNAME --author=NICKNAME  Author nickname
+  -e EVENT --event=EVENT  event.yml file
+DOCOPT
+
+  # init program parameters
+  options_cli = Docopt::docopt(usage, version: VERSION) 
+  #puts options_cli
+
+  # input parameters
+  dir_to_process, yaml_name = read_input_params options_cli
   ext_to_process = ["mts", "mov", "mp4", "avi", "wmv"]
-#  dir_to_process = Dir.pwd
-  dir_backup = File.join(dir_to_process, "backup")
+  #dir_backup = File.join(dir_to_process, "backup")
   dir_target_parent = "."
 
-  event = ANB_event.new yaml_name, dir_to_process
+  event = ANB_event.new yaml_name, dir_to_process, options_cli
 
   Video.init_collection dir_to_process, ext_to_process
 

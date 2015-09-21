@@ -1,30 +1,28 @@
-﻿---
-home: #Moscow - anb's home
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово" # MWG:Location - Район, местность
+﻿--- #PLACES directory version 2
+home: #Moscow - anb's home++
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
-    :gps_latitude: "55 36 31.49" #GPSLatitude
+    :gps_latitude: "55 36 31.49" #GPSLatitude 55.608788
     :gps_latitude_ref: N  #GPSLatitudeRef
-    :gps_longitude: "37 43 28.27" #GPSLongitude
+    :gps_longitude: "37 43 28.27" #GPSLongitude 37.724781
     :gps_longitude_ref: E #GPSLongitudeRef
     :gps_altitude: "170.0" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 moscow: #Moscow - anb's home
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Центр" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Центр" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 45 4.47" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -34,14 +32,13 @@ moscow: #Moscow - anb's home
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 flat_salnikov: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Тропарево-Никул." # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Тропарево-Никул." # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 39 32.14" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -51,14 +48,13 @@ flat_salnikov: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 flat_eremenko: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 19.38" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -68,14 +64,13 @@ flat_eremenko: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 flat_77: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 19.38" #GPSLatitude
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -85,14 +80,13 @@ flat_77: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 dacha_fenino:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская обл." # MWG:State  Регион, область
-    :city: "Серпухов" # MWG:City  Город
-    :location: "Фенино" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Московская обл." # MWG:State  Регион, область
+  :city: "Серпухов" # MWG:City  Город
+  :location: "Фенино" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 00 45.43" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -102,14 +96,13 @@ dacha_fenino:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 dacha_fenino_nara:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская обл." # MWG:State  Регион, область
-    :city: "Серпухов" # MWG:City  Город
-    :location: "Фенино, Нара" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Московская обл." # MWG:State  Регион, область
+  :city: "Серпухов" # MWG:City  Город
+  :location: "Фенино, Нара" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 1 7.35" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -119,14 +112,13 @@ dacha_fenino_nara:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 sredneuralsk:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Свердловская область" # MWG:State  Регион, область
-    :city: "Среднеуральск" # MWG:City  Город
-    :location: "СУГРЭС" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Свердловская обл" # MWG:State  Регион, область
+  :city: "Среднеуральск" # MWG:City  Город
+  :location: "СУГРЭС" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "56 59 54.97"
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -136,14 +128,13 @@ sredneuralsk:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 eburg:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Свердловская область" # MWG:State  Регион, область
-    :city: "Екатеринбург" # MWG:City  Город
-    :location: "город" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Свердловская обл" # MWG:State  Регион, область
+  :city: "Екатеринбург" # MWG:City  Город
+  :location: "город" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "56 51 0.00"
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -153,14 +144,13 @@ eburg:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 pavda:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Свердловская область" # MWG:State  Регион, область
-    :city: "Новая Ляля" # MWG:City  Город
-    :location: "Павда" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Свердловская обл" # MWG:State  Регион, область
+  :city: "Новая Ляля" # MWG:City  Город
+  :location: "Павда" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "59 14 58.10"
     :gps_latitude_ref: N  #GPSLatitudeRef
@@ -170,31 +160,29 @@ pavda:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 smirnoffs: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Орехово-Борисово" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Орехово-Борисово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 37 25.37" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "37 43 12.75" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 200.0 #GPSAltitude
+    :gps_altitude: "200.0" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 ikea_bd: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Икеа Белая Дача" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Икеа Белая Дача" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 39 14.66" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -204,99 +192,93 @@ ikea_bd: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 bne_grave:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Южное Бутово" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Южное Бутово" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 31 30.97" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "37 33 49.14" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 176.0 #GPSAltitude
+    :gps_altitude: "176.0" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 peterburg:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Санкт-Петербург" # MWG:State  Регион, область
-    :city: "Санкт-Петербург" # MWG:City  Город
-    :location: "Дворцовая пл." # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Санкт-Петербург" # MWG:State  Регион, область
+  :city: "Санкт-Петербург" # MWG:City  Город
+  :location: "Дворцовая пл." # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "59 56 21.069" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "30 18 50.067" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 0.5 #GPSAltitude
+    :gps_altitude: "0.5" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 tallin:
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Estonia" # MWG:Country Страна
-    :country_code: "EE" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Эстония" # MWG:State  Регион, область
-    :city: "Таллин" # MWG:City  Город
-    :location: "Старый город" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Estonia" # MWG:Country Страна
+  :country_code: "EE" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Эстония" # MWG:State  Регион, область
+  :city: "Таллин" # MWG:City  Город
+  :location: "Старый город" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "59 26 16.228" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "24 44 58.067" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 10 #GPSAltitude
+    :gps_altitude: "10" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 stockholm:
-  :location_created:
-    :time_zone: "+01:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Sweden" # MWG:Country Страна
-    :country_code: "SE" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Швеция" # MWG:State  Регион, область
-    :city: "Стокгольм" # MWG:City  Город
-    :location: "Старый город" # MWG:Location - Район, местность
+  :time_zone: "+01:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Sweden" # MWG:Country Страна
+  :country_code: "SE" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Швеция" # MWG:State  Регион, область
+  :city: "Стокгольм" # MWG:City  Город
+  :location: "Старый город" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "59 19 44.892" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "18 4 7.809" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 30 #GPSAltitude
+    :gps_altitude: "30" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 helsinki:
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Finland" # MWG:Country Страна
-    :country_code: "FI" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Финляндия" # MWG:State  Регион, область
-    :city: "Хельсинки" # MWG:City  Город
-    :location: "Центр" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Finland" # MWG:Country Страна
+  :country_code: "FI" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Финляндия" # MWG:State  Регион, область
+  :city: "Хельсинки" # MWG:City  Город
+  :location: "Центр" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "60 10 1.270" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
     :gps_longitude: "24 56 35.616" #GPSLongitude=37 deg 43' 12.75"
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
-    :gps_altitude: 30 #GPSAltitude
+    :gps_altitude: "30" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 saigon: #Vientam - Saigon
-  :location_created:
-    :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Asia"
-    :country: "Vietnam" # MWG:Country Страна
-    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Ho Chi Minh" # MWG:State  Регион, область
-    :city: "Saigon" # MWG:City  Город
-    :location: "District 1" # MWG:Location - Район, местность
+  :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Asia"
+  :country: "Vietnam" # MWG:Country Страна
+  :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Ho Chi Minh" # MWG:State  Регион, область
+  :city: "Saigon" # MWG:City  Город
+  :location: "District 1" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "10 49 08.13" #GPSLatitude
     :gps_latitude_ref: N #GPSLatitudeRef
@@ -306,14 +288,13 @@ saigon: #Vientam - Saigon
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 namhai: #Vientam - Mui Ne - Nam Hai Hotel
-  :location_created:
-    :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Asia"
-    :country: "Vietnam" # MWG:Country Страна
-    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Binh Thuan" # MWG:State  Регион, область
-    :city: "Phan Thiet" # MWG:City  Город
-    :location: "Mui Ne 25B Nguyen Dinh Chieu" # MWG:Location - Район, местность
+  :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Asia"
+  :country: "Vietnam" # MWG:Country Страна
+  :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Binh Thuan" # MWG:State  Регион, область
+  :city: "Phan Thiet" # MWG:City  Город
+  :location: "Mui Ne 25B Nguyen Dinh Chieu" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "10 56 32.84" #GPSLatitude
     :gps_latitude_ref: N #GPSLatitudeRef
@@ -323,14 +304,13 @@ namhai: #Vientam - Mui Ne - Nam Hai Hotel
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 muine: #Vietnam Mui Ne Fishing village
-  :location_created:
-    :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Asia"
-    :country: "Vietnam" # MWG:Country Страна
-    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Binh Thuan" # MWG:State  Регион, область
-    :city: "Phan Thiet" # MWG:City  Город
-    :location: "Mui Ne" # MWG:Location - Район, местность
+  :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Asia"
+  :country: "Vietnam" # MWG:Country Страна
+  :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Binh Thuan" # MWG:State  Регион, область
+  :city: "Phan Thiet" # MWG:City  Город
+  :location: "Mui Ne" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "10 56 28.29" #GPSLatitude
     :gps_latitude_ref: N #GPSLatitudeRef
@@ -340,13 +320,12 @@ muine: #Vietnam Mui Ne Fishing village
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 hamram: #дальний пляж за Муйне
-  :location_created:
-    :world_region: "Asia"
-    :country: "Vietnam" # MWG:Country Страна
-    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Binh Thuan" # MWG:State  Регион, область
-    :city: "Phan Thiet" # MWG:City  Город
-    :location: "Mui Ne" # MWG:Location - Район, местность
+  :world_region: "Asia"
+  :country: "Vietnam" # MWG:Country Страна
+  :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Binh Thuan" # MWG:State  Регион, область
+  :city: "Phan Thiet" # MWG:City  Город
+  :location: "Mui Ne" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "10 56 32.84" #GPSLatitude
     :gps_latitude_ref: N #GPSLatitudeRef
@@ -356,14 +335,13 @@ hamram: #дальний пляж за Муйне
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 decentury: #Vietnam Mui Ne de Century Resort
-  :location_created:
-    :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Asia"
-    :country: "Vietnam" # MWG:Country Страна
-    :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Binh Thuan" # MWG:State  Регион, область
-    :city: "Phan Thiet" # MWG:City  Город
-    :location: "Mui Ne de Century Resort" # MWG:Location - Район, местность
+  :time_zone: "+07:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Asia"
+  :country: "Vietnam" # MWG:Country Страна
+  :country_code: "VN" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Binh Thuan" # MWG:State  Регион, область
+  :city: "Phan Thiet" # MWG:City  Город
+  :location: "Mui Ne de Century Resort" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "10 57 2.28" #GPSLatitude
     :gps_latitude_ref: N #GPSLatitudeRef
@@ -373,14 +351,13 @@ decentury: #Vietnam Mui Ne de Century Resort
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef
 
 school_nika: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe" #
-    :country: "Russia" #1 MWG:Country Страна
-    :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" #2 MWG:State  Регион, область
-    :city: "Москва" #3 MWG:City  Город
-    :location: "Орехово-Борисово Южное, гимназия Ника" #4 MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe" #
+  :country: "Russia" #1 MWG:Country Страна
+  :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" #2 MWG:State  Регион, область
+  :city: "Москва" #3 MWG:City  Город
+  :location: "Орехово-Борисово Южное, гимназия Ника" #4 MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 38.28" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -390,14 +367,13 @@ school_nika: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 school_1771: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe" #
-    :country: "Russia" #1 MWG:Country Страна
-    :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" #2 MWG:State  Регион, область
-    :city: "Москва" #3 MWG:City  Город
-    :location: "Орехово-Борисово Южное, школа 1771" #4 MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe" #
+  :country: "Russia" #1 MWG:Country Страна
+  :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" #2 MWG:State  Регион, область
+  :city: "Москва" #3 MWG:City  Город
+  :location: "Орехово-Борисово Южное, школа 1771" #4 MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 22.23" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -407,14 +383,13 @@ school_1771: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 oblaka: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe" #
-    :country: "Russia" #1 MWG:Country Страна
-    :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" #2 MWG:State  Регион, область
-    :city: "Москва" #3 MWG:City  Город
-    :location: "Орехово-Борисово Южное, ТЦ Облака" #4 MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe" #
+  :country: "Russia" #1 MWG:Country Страна
+  :country_code: "RU" #1 XMP-iptcCore:CountryCode Код страны из ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" #2 MWG:State  Регион, область
+  :city: "Москва" #3 MWG:City  Город
+  :location: "Орехово-Борисово Южное, ТЦ Облака" #4 MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 43.60" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -424,14 +399,13 @@ oblaka: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 qzar: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "м. Тульская" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "м. Тульская" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 42 29.95" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -440,16 +414,14 @@ qzar: #Moscow
     :gps_altitude: "131.0" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
-
 vavilova23: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Вавилова 23" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Вавилова 23" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: " 55 41 49.51" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -459,14 +431,13 @@ vavilova23: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 tb_podmoskovie:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская обл." # MWG:State  Регион, область
-    :city: "Заборье" # MWG:City  Город
-    :location: "санаторий Подмосковье" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Московская обл." # MWG:State  Регион, область
+  :city: "Заборье" # MWG:City  Город
+  :location: "санаторий Подмосковье" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 22 44.30" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -476,14 +447,13 @@ tb_podmoskovie:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 tsaritsyno: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Парк Царицыно" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Парк Царицыно" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 36 51.74" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -493,14 +463,13 @@ tsaritsyno: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 kolomenskoye: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Парк Коломенское" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Парк Коломенское" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 39 28.13" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -510,14 +479,13 @@ kolomenskoye: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 flat_razvilka:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Московская обл." # MWG:State  Регион, область
-    :city: "Развилка" # MWG:City  Город
-    :location: "дом 43" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Московская обл." # MWG:State  Регион, область
+  :city: "Развилка" # MWG:City  Город
+  :location: "дом 43" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 35 18.92" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -527,14 +495,13 @@ flat_razvilka:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 vienna:
-  :location_created:
-    :time_zone: "+01:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Austria" # MWG:Country Страна
-    :country_code: "AT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Vienna" # MWG:State  Регион, область
-    :city: "Vienna" # MWG:City  Город
-    :location: "Volksbank International" # MWG:Location - Район, местность
+  :time_zone: "+01:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Austria" # MWG:Country Страна
+  :country_code: "AT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Vienna" # MWG:State  Регион, область
+  :city: "Vienna" # MWG:City  Город
+  :location: "Volksbank International" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "48 12 55.31" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -544,14 +511,13 @@ vienna:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 rssl: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Бибирево" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Бибирево" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 53 19.83" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -561,14 +527,13 @@ rssl: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 yaroslavl:
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Ярославль" # MWG:State  Регион, область
-    :city: "Ярославль" # MWG:City  Город
-    :location: "Центр" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Ярославль" # MWG:State  Регион, область
+  :city: "Ярославль" # MWG:City  Город
+  :location: "Центр" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "57 38 00.00" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -578,14 +543,13 @@ yaroslavl:
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 krokusexpo: #Moscow
-  :location_created:
-    :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Russia" # MWG:Country Страна
-    :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Москва" # MWG:State  Регион, область
-    :city: "Москва" # MWG:City  Город
-    :location: "Крокус-Экспо" # MWG:Location - Район, местность
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Москва" # MWG:State  Регион, область
+  :city: "Москва" # MWG:City  Город
+  :location: "Крокус-Экспо" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "55 49 19.21" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -595,14 +559,13 @@ krokusexpo: #Moscow
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 rimini_alfredos: #Italy
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Italy" # MWG:Country Страна
-    :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Rimini" # MWG:State  Регион, область
-    :city: "Rivazurra" # MWG:City  Город
-    :location: "Alfredo's" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Italy" # MWG:Country Страна
+  :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Rimini" # MWG:State  Регион, область
+  :city: "Rivazurra" # MWG:City  Город
+  :location: "Alfredo's" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "44 02 20.70" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -612,14 +575,13 @@ rimini_alfredos: #Italy
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 san_marino: #Italy
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Italy" # MWG:Country Страна
-    :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "San Marino" # MWG:State  Регион, область
-    :city: "San Marino" # MWG:City  Город
-    :location: "Castle" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Italy" # MWG:Country Страна
+  :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "San Marino" # MWG:State  Регион, область
+  :city: "San Marino" # MWG:City  Город
+  :location: "Castle" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "43 56 6.795" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -629,14 +591,13 @@ san_marino: #Italy
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 firenze: #Italy
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Italy" # MWG:Country Страна
-    :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Toscana" # MWG:State  Регион, область
-    :city: "Firenze" # MWG:City  Город
-    :location: "town" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Italy" # MWG:Country Страна
+  :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Toscana" # MWG:State  Регион, область
+  :city: "Firenze" # MWG:City  Город
+  :location: "town" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "43 46 10.738" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -646,14 +607,13 @@ firenze: #Italy
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 venezia: #Italy
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Italy" # MWG:Country Страна
-    :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Venezia" # MWG:State  Регион, область
-    :city: "Venice" # MWG:City  Город
-    :location: "town" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Italy" # MWG:Country Страна
+  :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Venezia" # MWG:State  Регион, область
+  :city: "Venice" # MWG:City  Город
+  :location: "town" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "45 26 33.581" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -663,14 +623,13 @@ venezia: #Italy
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 cattolica: #Italy
-  :location_created:
-    :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Italy" # MWG:Country Страна
-    :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Rimini" # MWG:State  Регион, область
-    :city: "Cattolica" # MWG:City  Город
-    :location: "town" # MWG:Location - Район, местность
+  :time_zone: "+02:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Italy" # MWG:Country Страна
+  :country_code: "IT" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Rimini" # MWG:State  Регион, область
+  :city: "Cattolica" # MWG:City  Город
+  :location: "town" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "43 57 58.893" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -680,14 +639,13 @@ cattolica: #Italy
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 evpatoria_chaika: #Крым
-  :location_created:
-    :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Ukraine" # MWG:Country Страна
-    :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Крым" # MWG:State  Регион, область
-    :city: "Евпатория" # MWG:City  Город
-    :location: "Чайка" # MWG:Location - Район, местность
+  :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Ukraine" # MWG:Country Страна
+  :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Крым" # MWG:State  Регион, область
+  :city: "Евпатория" # MWG:City  Город
+  :location: "Чайка" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "45 9 32.47" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -697,14 +655,13 @@ evpatoria_chaika: #Крым
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 vitino: #Крым
-  :location_created:
-    :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Ukraine" # MWG:Country Страна
-    :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Крым" # MWG:State  Регион, область
-    :city: "Евпатория" # MWG:City  Город
-    :location: "Витино" # MWG:Location - Район, местность
+  :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Ukraine" # MWG:Country Страна
+  :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Крым" # MWG:State  Регион, область
+  :city: "Евпатория" # MWG:City  Город
+  :location: "Витино" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "45 12 54.20" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -714,14 +671,13 @@ vitino: #Крым
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 novy_svet: #Крым
-  :location_created:
-    :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Ukraine" # MWG:Country Страна
-    :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Крым" # MWG:State  Регион, область
-    :city: "Судак" # MWG:City  Город
-    :location: "Новый Свет" # MWG:Location - Район, местность
+  :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Ukraine" # MWG:Country Страна
+  :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Крым" # MWG:State  Регион, область
+  :city: "Судак" # MWG:City  Город
+  :location: "Новый Свет" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "44 49 42.13" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -731,14 +687,13 @@ novy_svet: #Крым
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 kazantip: #Крым
-  :location_created:
-    :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Ukraine" # MWG:Country Страна
-    :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Крым" # MWG:State  Регион, область
-    :city: "Щелкино" # MWG:City  Город
-    :location: "Казантип" # MWG:Location - Район, местность
+  :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Ukraine" # MWG:Country Страна
+  :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Крым" # MWG:State  Регион, область
+  :city: "Щелкино" # MWG:City  Город
+  :location: "Казантип" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "45 27 38.53" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -748,14 +703,13 @@ kazantip: #Крым
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 yalta: #Крым
-  :location_created:
-    :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Europe"
-    :country: "Ukraine" # MWG:Country Страна
-    :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Крым" # MWG:State  Регион, область
-    :city: "Ялта" # MWG:City  Город
-    :location: "Ялта" # MWG:Location - Район, местность
+  :time_zone: "+03:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Ukraine" # MWG:Country Страна
+  :country_code: "UA" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Крым" # MWG:State  Регион, область
+  :city: "Ялта" # MWG:City  Город
+  :location: "Ялта" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "44 29 42.74" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -765,14 +719,13 @@ yalta: #Крым
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
 
 almaty: #Алматы
-  :location_created:
-    :time_zone: "+06:00" # +/-HH:MM used for MWG:DateTimeOriginal
-    :world_region: "Asia"
-    :country: "Kazakhstan" # MWG:Country Страна
-    :country_code: "KZ" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
-    :state: "Almaty" # MWG:State  Регион, область
-    :city: "Алматы" # MWG:City  Город
-    :location: "Алматы" # MWG:Location - Район, местность
+  :time_zone: "+06:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Asia"
+  :country: "Kazakhstan" # MWG:Country Страна
+  :country_code: "KZ" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Almaty" # MWG:State  Регион, область
+  :city: "Алматы" # MWG:City  Город
+  :location: "Алматы" # MWG:Location - Район, местность
   :gps_created:
     :gps_latitude: "43 15 49.23" #GPSLatitude=55 deg 37' 25.37"
     :gps_latitude_ref: N #'GPSLatitudeRef=N' = North 'S' = South
@@ -780,3 +733,99 @@ almaty: #Алматы
     :gps_longitude_ref: E #GPSLongitudeRef='E' = East 'W' = West
     :gps_altitude: "788" #GPSAltitude
     :gps_altitude_ref: "Above Sea Level" #GPSAltitudeRef=Below Sea Level
+
+sochi: #Сочи
+  :time_zone: "+04:00" # +/-HH:MM used for MWG:DateTimeOriginal
+  :world_region: "Europe"
+  :country: "Russia" # MWG:Country Страна
+  :country_code: "RU" # XMP-iptcCore:CountryCode Код страны из http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Краснодар" # MWG:State  Регион, область
+  :city: "Сочи" # MWG:City  Город
+  :location: "Адлер" # MWG:Location - Район, местность
+  :gps_created:
+    :gps_latitude: "43 24 7.63"
+    :gps_latitude_ref: N
+    :gps_longitude: "39 57 21.99"
+    :gps_longitude_ref: E
+    :gps_altitude: "1"
+    :gps_altitude_ref: "Above Sea Level"
+
+brussels:
+  :time_zone: "+01:00"
+  :world_region: "Europe"
+  :country: "Belgium"
+  :country_code: "BE"
+  :state: "Brussels-Capital Region"
+  :city: "Brussels"
+  :location: "Grand Place"
+  :gps_created:
+    :gps_latitude: "50 50 48.9"
+    :gps_latitude_ref: N
+    :gps_longitude: "4 21 08.8"
+    :gps_longitude_ref: E
+    :gps_altitude: "10"
+    :gps_altitude_ref: "Above Sea Level"
+
+brugge:
+  :time_zone: "+01:00"
+  :world_region: "Europe"
+  :country: "Belgium"
+  :country_code: "BE"
+  :state: "West-Vlaanderen"
+  :city: "Brugge"
+  :location: "Grote Markt"
+  :gps_created:
+    :gps_latitude: "51 12 36.6"
+    :gps_latitude_ref: N
+    :gps_longitude: "3 13 05.8"
+    :gps_longitude_ref: E
+    :gps_altitude: "10"
+    :gps_altitude_ref: "Above Sea Level"
+
+luxembourg:
+  :time_zone: "+01:00"
+  :world_region: "Europe"
+  :country: "Luxembourg"
+  :country_code: "LU"
+  :state: "Luxembourg"
+  :city: "Luxembourg"
+  :location: "Fondation J.P. Pescatore"
+  :gps_created:
+    :gps_latitude: "49 35 59.4"
+    :gps_latitude_ref: N
+    :gps_longitude: "6 08 02.0"
+    :gps_longitude_ref: E
+    :gps_altitude: "100"
+    :gps_altitude_ref: "Above Sea Level"
+
+tenerife:
+  :time_zone: "+01:00"
+  :world_region: "Canary Islands"
+  :country: "Spain"
+  :country_code: "ES"
+  :state: "Tenerife"
+  :city: "Tenerife"
+  :location: "Teide"
+  :gps_created:
+    :gps_latitude: "28 16 15.76"
+    :gps_latitude_ref: N
+    :gps_longitude: "16 38 34.47"
+    :gps_longitude_ref: W
+    :gps_altitude: "100"
+    :gps_altitude_ref: "Above Sea Level"
+
+madrid:
+  :time_zone: "+01:00"
+  :world_region: "Europe"
+  :country: "Spain"
+  :country_code: "ES"
+  :state: "Madrid"
+  :city: "Madrid"
+  :location: "Puerto del Sol"
+  :gps_created:
+    :gps_latitude: "40 25 0.1"
+    :gps_latitude_ref: N
+    :gps_longitude: "03 42 8.9"
+    :gps_longitude_ref: W
+    :gps_altitude: "636"
+    :gps_altitude_ref: "Above Sea Level"

@@ -1,0 +1,17 @@
+:event:                                                                         # Event profile. Attention! File code page should be UTF-8 / Паспорт события. Внимание! Кодировка файла должна быть UTF-8
+  :title:		"Владимир Cвадьба Кошелевых Кати и Леши"                            # Место Краткое название события (mwg_coll:CollectionName)
+                                                                                # Период события
+  :date_start: "2001-08-11 00:00:00"                                            # YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+# :date_end: 	 ""                                                               # YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+                                                                                # Ключевые слова
+  :keywords:                                                                    # XMP:Subject (MWG:Keywords)
+    :what:   ["свадьба"]                                                        # Описание события            (Что? Объект)
+    :who:    ["Масюк Наталья", "Кореньковы", "Челапкины", "Кошелевы"]           # Перечень участников         (Кто? Субъект) 
+    :where:  ["Владимир", "Суздаль"]                                            # Описание места/мест         (Где? Место)                                                
+    :when:   ["лето"]                                                           # Описание времени            (Когда? Время)
+    :why:    ["гулянье", "бракосочетание"]                                      # Описание причины и цели     (Почему?/Зачем? Цель/Причина)
+    :how:    ["весело"]                                                         # Каково было?                (Ощущения)
+    :method: ["digital camera"]                                                 # Метод получения изображения (Чем?/Как? Средство/Способ) - camera, scanner
+  :alias_creator_copyright: mns	                                                # Автор медиа - creator, nikname, copyright will be taken from creators.yml
+  :alias_place_created: vladimir                                                # Место создания снимка - location_created and gps_created will be taken from locations.yml
+  :uri: 		"-.net/"                                                            # mwg-coll:CollectionURI - адрес фотки в интернете

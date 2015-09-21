@@ -1,0 +1,8 @@
+:input_parameter:                                                               # Настройки
+  :foto_ext: [jpg]                                                              # foto extentions
+  :dir_target_parent: "."                                                       # OPTIONAL parent folder for the output folder (in Win32 only ASCII allowed!)
+  :dir_backup: "_backup"                                                        # OPTIONAL folder for back up files before processing (in Win32 only ASCII allowed!) 
+  :dir_tmp: "_tmp"                                                              # OPTIONAL tmp folder for processing (in Win32 only ASCII allowed!) 
+  :dir_assets: ["U:/Album/!Event/Setting"]                                      # OPTIONAL folder(s) with configs, places.yml, creators.yml etc (in Win32 use / instead of \)
+                                                                                # :name_id_template: "[#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(5,'0')}]" #OPTIONAL
+  :name_suffix_template: "{$}(#{name})"                                         # will be added to filename after ID

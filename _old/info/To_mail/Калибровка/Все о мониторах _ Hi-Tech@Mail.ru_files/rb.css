@@ -1,0 +1,19 @@
+.rb_body {border: 1px solid #E6E6E6; background: #E6E6E6 url(http://rs.mail.ru/b8803690.gif) repeat-x top; font-size: 12px; margin-bottom: 10px; padding: 7px 10px 10px 10px; overflow: hidden; text-align: left; //display: inline-block;}
+.rb_body a {color: black;}
+.rb_h4 {border-bottom: 1px solid; color: #0857A6; font-size: 17px; font-weight: bold; text-decoration: none;}
+.rb_body h4 {margin: 0;}
+a:HOVER.rb_h4 {border-bottom: 0 solid #0857A6;}
+.rb_h5 {color: #6D7B8E; display: block; font-size: 13px; font-weight: bold; padding: 7px 0 0 0; text-decoration: none;}
+.rb_h6 {color: #00468c; display: block; font-size: 13px; font-weight: bold; padding: 0 0 3px 0; text-decoration: none;}
+.rb_content {margin: 7px 0 0 0; overflow: hidden; //display: inline-block;}
+.rb_img {float: left; margin: 0 5px 0 0; background-position: left top; background-repeat: no-repeat;}
+.rb_flash {float: left; margin: 0 5px 0 0;}
+.rb_nobr {white-space: nowrap;}
+.rb_text {padding-bottom: 3px; overflow: hidden; //display: inline-block;}
+.rb_textSmall {padding-bottom: 3px; font-size: 11px; overflow: hidden; //display: inline-block;}
+.rb_next {font-weight: bold; font-size: 11px; float: right; margin-top: 5px;}
+.rb_more {font-weight: bold; font-size: 11px; display: block; margin-top: 5px;}
+
+.rb_imgUl {background-position: left top; background-repeat: no-repeat; font-weight: bold; display: block; height: 50px; margin: 0; padding-left: 55px;}
+.rb_ul {margin: 10px 0 0 13px; padding-left: 2px;}
+.rb_li {color: #999999; padding-bottom: 2px;}

@@ -10,7 +10,7 @@ require "logger"
 require "fileutils"
 #require "mini_exiftool"
 require_relative "mini_exiftool-1.6.0" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
-require_relative "progressbar" 
+require_relative "progressbar"
 # require "progressbar" # gem install progressbar (https://github.com/jfelchner/ruby-progressbar)
 
 # *** Standard Ruby class - anb alter ***
@@ -36,15 +36,15 @@ class ANBLogger < Logger
     end
 
     case severity
-  		when ERROR
-  			$stderr.puts "ERROR: #{msg}"
-  			$stderr.puts	
-  		when FATAL
-  			$stderr.puts "FATAL: #{msg}"
-  			$stderr.puts
+    when ERROR
+      $stderr.puts "ERROR: #{msg}"
+      $stderr.puts
+    when FATAL
+      $stderr.puts "FATAL: #{msg}"
+      $stderr.puts
     end
-  	
-  	super
+
+    super
 
   end #add
 
@@ -64,9 +64,9 @@ class ANBConfig
     fail(FatalError, "- '#{yaml}' is not a file;") unless File.file?(yaml)
     yaml
   end
-  
+
   # read from config
-  def self.load_yaml yaml=nil   
+  def self.load_yaml yaml=nil
     yaml_content = YAML.load_file(yaml)
     $log.info "YAML loaded: #{yaml}"
   rescue StandardError => e
@@ -74,12 +74,12 @@ class ANBConfig
   else
     return yaml_content
   end
-  
+
 end #class ANBConfig
 
 # *** Foto event ***
 class FotoEvent
-  # *** Constants 
+  # *** Constants
   # Желательно, чтобы dir_* были в ASCII иначе - несовместимость с Windows
   DIR_TMP = "tmp"
   DIR_TARGET_PARENT = "."
@@ -89,33 +89,32 @@ class FotoEvent
   class FatalError < StandardError; end
 
   # Instance attributes and methods
-  # TODO move to option_parser
   attr_reader :dir_original, :dir_tmp, :dir_target, :dir_backup, :dir_assets
   attr_reader :name_suffix_template, :name_id_template, :foto_ext
   attr_reader :force_set_dto, :delta_dto
-    
+
   # Event data
   attr_reader :profile_name, :sort, :yaml_event
   attr_reader :prefix, :directory_name
   attr_reader :title, :date_start, :date_end, :author_nikname, :creator
-  attr_reader :copyright, :keywords, :location_created, :gps_created, :collection_name, :collection_uri 
-  
+  attr_reader :copyright, :keywords, :location_created, :gps_created, :collection_name, :collection_uri
+
   # Class variables
   @@location_created_default = { :time_zone => "", :world_region => "", :country => "", :country_code => "",
       :state => "", :city => "", :location => "" }
-  
+
   @@gps_created_default = { :gps_latitude => "", :gps_latitude_ref => "", :gps_longitude => "",
       :gps_longitude_ref => "", :gps_altitude => "", :gps_altitude_ref => "" }
 
 
-  # Event initialize 
+  # Event initialize
   def initialize( options_cfg={}, options_cli={}, dir_to_process=File.pwd)
     $log.info "*** Initializing event"
-    
+
     # read from event profile
     @yaml_event = options_cli['--event']
     options_evt = ANBConfig.load_yaml @yaml_event
-    
+
     @foto_ext = options_cfg[:input_parameter][:foto_ext]||["jpg"]
 
     @title = options_evt[:event][:title].strip
@@ -124,7 +123,6 @@ class FotoEvent
     @collection_name = @title
     @collection_uri = options_evt[:event][:uri].strip
 
-    #TODO put into options struct
     @name_suffix_template = options_cfg[:input_parameter][:name_suffix_template]||""
     @name_id_template = options_cfg[:input_parameter][:name_id_template]||""
     @force_set_dto = options_cfg[:input_parameter][:force_set_dto]||false
@@ -135,8 +133,8 @@ class FotoEvent
     @dir_assets << File.join(ENV['HOME'], File.basename($PROGRAM_NAME, File.extname($PROGRAM_NAME)))
     @dir_assets << File.dirname($PROGRAM_NAME)
 
-    # Event dates
-    begin 
+    # +Event dates
+    begin
       date = options_evt[:event][:date_start]||""
       @date_start = DateTime.strptime(date, $DateTimeFormat)
     rescue StandardError => e
@@ -153,15 +151,15 @@ class FotoEvent
     rescue StandardError => e
       raise FatalError, e.full_message(" - date_end parsing error;")
     end
-    
-    raise FatalError, "date_end must be >= date_begin" unless  @date_end >= @date_start 
+
+    raise FatalError, "date_end must be >= date_begin" unless  @date_end >= @date_start
     $log.info "Event dates: #{@date_start.to_date}..#{@date_end.to_date}"
-    
+
     @keywords = []
     kwh = options_evt[:event][:keywords]||{}
     kwh.each do |k,v|
       @keywords.concat(v)
-    end  
+    end
     @keywords.uniq!
     @keywords.delete_if {|v| v.empty?}
     # Keywords: string[0,64]+
@@ -184,7 +182,7 @@ class FotoEvent
         yaml = ANBConfig.get_1st_yaml(@dir_assets, "creator*")
         creators = ANBConfig.load_yaml yaml
         my_creator = creators[alias_creator_copyright]
-        fail(FatalError, " - No creator #{alias_creator_copyright} found in YAML #{yaml}; ") if my_creator.nil?              
+        fail(FatalError, " - No creator #{alias_creator_copyright} found in YAML #{yaml}; ") if my_creator.nil?
         @author_nikname = my_creator[:author_nikname]||""
         @creator = my_creator[:creator]||[]
         @copyright = my_creator[:copyright]||""
@@ -223,12 +221,12 @@ class FotoEvent
         yaml = ANBConfig.get_1st_yaml(@dir_assets, "place*")
         places = ANBConfig.load_yaml yaml
         my_place = places[alias_place_created]
-        fail(FatalError, " - No place #{alias_place_created} found in YAML #{yaml}; ") if my_place.nil?          
+        fail(FatalError, " - No place #{alias_place_created} found in YAML #{yaml}; ") if my_place.nil?
         @location_created = my_place[:location_created]||{}
         @location_created = @@location_created_default.merge @location_created
         @gps_created = my_place[:gps_created]||{}
         @gps_created = @@gps_created_default.merge @gps_created
-  
+
       rescue FotoEvent::FatalError => e
         raise
       rescue StandardError => e
@@ -260,24 +258,24 @@ class FotoEvent
       @prefix = generate_prefix(@date_start, @date_end)+@sort
       @directory_name = "#{@prefix} #{@title}".strip
 
-  		dir_tmp = options_cfg[:input_parameter][:dir_tmp]||DIR_TMP
+      dir_tmp = options_cfg[:input_parameter][:dir_tmp]||DIR_TMP
       #TODO encoding in dir (UTF8 vs Win1251)
       @dir_tmp = File.expand_path(File.join(dir_tmp))
-      #TODO make dir only when using it
+      # TODO: make dir only when using it
       Dir.mkdir(@dir_tmp) unless File.exists?(@dir_tmp)
 
-  		dir_target_parent = options_cfg[:input_parameter][:dir_target_parent]||DIR_TARGET_PARENT 
-  		#TODO encoding in dir (UTF8 vs Win1251)
-  		@dir_target = File.join(File.expand_path(dir_target_parent), @directory_name) 
+      dir_target_parent = options_cfg[:input_parameter][:dir_target_parent]||DIR_TARGET_PARENT
+      #TODO encoding in dir (UTF8 vs Win1251)
+      @dir_target = File.join(File.expand_path(dir_target_parent), @directory_name)
       #TODO make dir only when using it
       Dir.mkdir(@dir_target) unless File.exists?(@dir_target)
-      
-  		dir_backup = options_cfg[:input_parameter][:dir_backup]||DIR_BACKUP
+
+      dir_backup = options_cfg[:input_parameter][:dir_backup]||DIR_BACKUP
       #TODO encoding in dir (UTF8 vs Win1251)
       @dir_backup = File.expand_path(File.join(dir_backup))
       #TODO make dir only when using it
       Dir.mkdir(@dir_backup) unless File.exists?(@dir_backup)
-      
+
     rescue StandardError => e
       raise FatalError, e.full_message(" - initializing event dirs; ")
     end
@@ -285,7 +283,7 @@ class FotoEvent
     $log.info "Event dir_tmp: #{@dir_tmp}"
     $log.info "Event dir_target: #{@dir_target}"
     $log.info "Event dir_backup: #{@dir_backup}"
-    
+
     begin #copy profile to target event folder
       @profile_name = File.join(@dir_target, "#{@prefix}_#{File.basename(@yaml_event)}")
       FileUtils.mv(@profile_name, @profile_name+"_backup", :force => true) if File.exists?(@profile_name)
@@ -296,7 +294,7 @@ class FotoEvent
     $log.info "Event profile: #{@profile_name}"
     $log.info "*** Event initialized Ok"
   end #initialize
-  
+
   private
   # Generate PREFIX in format:
   #     YYYYmmdd if date1 == date2
@@ -322,9 +320,9 @@ class FotoObject
   class ID_counter
     Limit36 = "zzzzz" # zzzzz= max id during the day
     Limit_per_day = Limit36.to_i(36)
-    Limit_per_sec = Limit_per_day/(24.0*3600.0)  
+    Limit_per_sec = Limit_per_day/(24.0*3600.0)
     attr_reader :date_init, :num, :counter
-    
+
     def initialize
       @num = 0
       @date_init = DateTime.now
@@ -334,23 +332,23 @@ class FotoObject
     def counter36
       @counter.to_s(36).upcase
     end
-    
+
     def next
       @num += 1
       @counter += 1
       if @counter > Limit_per_day
-        dn = @date_init.next 
+        dn = @date_init.next
         @date_init = DateTime.new(dn.year, dn.mon, dn.day, 0, 0, 0, dn.ofset)
         @counter = 0
       end
-    end  
+    end
   end # class counter
 
   # Class attributes and methods
   @@llog_filename = "exiftool.log"
   @@ExifCommand = "exiftool"
   @@metadata_opts = { :creator => [], :copyright => "", :keywords => [], :location_created => {},
-                      :gps_created => {}, :collection_name => "", :collection_uri => "", 
+                      :gps_created => {}, :collection_name => "", :collection_uri => "",
                       :force => false }
   @@collection = []
   @@errors_occured = false
@@ -378,8 +376,8 @@ class FotoObject
   # mkdir
   def self.make_dir dir
     Dir.mkdir(dir) unless File.exists?(dir)
-  end  
-  
+  end
+
   # Initializin foto collection
   def self.init_collection event
     msg = "*** Processing via #{__method__} ..."; puts msg; $log << "\n"; $log.info msg
@@ -387,9 +385,9 @@ class FotoObject
 
     @@id = ID_counter.new
     $log.info "Date_init=#{@@id.date_init}, Start counter=#{@@id.counter}(#{@@id.counter36})"
-    
+
     @@current_dto2set = event.date_start
-    
+
     @@errors_occured = false
     @@metadata_conflicts_occured = false
     Dir.chdir(event.dir_original)
@@ -400,7 +398,7 @@ class FotoObject
     files2process = ffiles.size
     if files2process <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     # real loop
     msg = "Files to process: #{files2process}"; $log.info msg
@@ -423,13 +421,13 @@ class FotoObject
       $log.info "Processing #{afile}"
       aextention = File.extname afile
       aname = File.basename afile, aextention
-      @@collection.each do |f| 
+      @@collection.each do |f|
         if f.name.upcase == aname.upcase
           f.audio_name = aname
           f.audio_extention = aextention
           alinks += 1
         end
-      end    
+      end
       pbar.inc
     end
     pbar.finish
@@ -446,11 +444,11 @@ class FotoObject
     else
       self.make_dir dir
       $log.info "*** Backing up files to #{dir}"
-    end  
-    
+    end
+
     if self.collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     pbar = ProgressBar.new("Backing up", @@collection.count)
     total = 0
@@ -482,11 +480,11 @@ class FotoObject
     else
       self.make_dir dir
       $log.info "*** Moving files to #{dir}"
-    end  
-    
+    end
+
     if self.collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     pbar = ProgressBar.new("Moving", @@collection.count)
     total = 0
@@ -513,13 +511,13 @@ class FotoObject
   # Run sexiftool command
   def self.run_command args, llog
     msg = "Running #{@@ExifCommand} #{args*" "} ..."
-    $log.info msg; llog << "\n"; llog.info msg; puts msg  
+    $log.info msg; llog << "\n"; llog.info msg; puts msg
     begin
       result = system(@@ExifCommand, *args, { :out=>llog.logdev.dev}) #:chdir=>dir,, :err=>llog.logdev.dev
       raise Error if result.nil?
     rescue => e
       msg = e.full_message("#{__method__} - fail to execute #{@@ExifCommand};"); $log.error msg
-    end      
+    end
     msg = "Result: #{result||"fail"}, #{$?}"; $log.info msg; llog.info msg; puts msg
   end #run_command
 
@@ -531,14 +529,14 @@ class FotoObject
     $log.info "*** Setting metadata tags in #{dir}"
     if self.collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     llog = ANBLogger.new(@@llog_filename)
- 
+
     # generate exiftool command
     script_name = "#{__method__}.txt"
     args = ["-@", script_name]
-     
+
     # generate ARGFILE for exiftool
     total = 0
     File.open(script_name, "w+:utf-8") do |f|
@@ -548,36 +546,36 @@ class FotoObject
         if  foto.errors.empty?
           total += 1
           $log.info "Adding #{foto.name+foto.extention} to script"
-          $log.info "    Tags already exist: #{foto.metadata_conflicts.inspect}" unless foto.metadata_conflicts.empty? 
+          $log.info "    Tags already exist: #{foto.metadata_conflicts.inspect}" unless foto.metadata_conflicts.empty?
           f.puts %Q{# #{total}}
-          
+
           # TODO force
           # Force set date_time_original
           if foto.dto_need2set
             f.puts %Q{-AllDates=#{foto.date_time_original}}
           end
-          
+
           if foto.metadata_conflicts.index(:creator).nil?
             # MWG:Creator = EXIF:Artist, IPTC:By-line, XMP-dc:Creator
             creator = opts[:creator]||[]
-            creator.each do |o| 
+            creator.each do |o|
               f.puts %Q{-MWG:Creator-=#{o}}
               f.puts %Q{-MWG:Creator+=#{o}}
-            end 
-          end 
+            end
+          end
 
           if foto.metadata_conflicts.index(:copyright).nil?
             # MWG:Copyright = EXIF:Copyright, IPTC:CopyrightNotice, XMP-dc:Rights
             copyright = opts[:copyright]||""
             f.puts %Q{-MWG:Copyright=#{copyright}} unless copyright.empty?
-          end 
+          end
 
           #disabled check: if foto.metadata_conflicts.index(:keywords).nil?
           # MWG:Keywords = IPTC:Keywords, XMP-dc:Subject
           keywords = opts[:keywords]||[]
           keywords.each do |o|
-            f.puts %Q{-MWG:Keywords-=#{o}}        
-            f.puts %Q{-MWG:Keywords+=#{o}} 
+            f.puts %Q{-MWG:Keywords-=#{o}}
+            f.puts %Q{-MWG:Keywords+=#{o}}
           end
 
           if foto.metadata_conflicts.index(:location_created).nil?
@@ -592,66 +590,66 @@ class FotoObject
 
             country = location_created[:country]||"" #1 MWG:Country Страна
             f.puts %Q{-MWG:Country=#{country}} unless country.empty?
-            
+
             country_code = location_created[:country_code]||"" #1 XMP-iptcCore:CountryCode ISO_3166-1
             f.puts %Q{-XMP-iptcCore:CountryCode=#{country_code}} unless country_code.empty?
 
             state = location_created[:state]||"" #2 MWG:State  Регион, область
             f.puts %Q{-MWG:State=#{state}} unless state.empty?
-            
+
             city = location_created[:city]||""  #3 MWG:City  Город
             f.puts %Q{-MWG:City=#{city}} unless city.empty?
 
             location = location_created[:location]||"" #4 MWG:Location - Район, местность
             f.puts %Q{-MWG:Location=#{location}} unless location.empty?
-          end 
+          end
 
           if foto.metadata_conflicts.index(:gps_created).nil?
             # GPS
-            gps_created = opts[:gps_created]||{}     
-            
+            gps_created = opts[:gps_created]||{}
+
             gps_latitude = gps_created[:gps_latitude]||""
             gps_latitude_ref = gps_created[:gps_latitude_ref]||""
             if not gps_latitude.empty? and not gps_latitude_ref.empty?
-              f.puts %Q{-GPSLatitude="#{gps_latitude}"}       
+              f.puts %Q{-GPSLatitude="#{gps_latitude}"}
               f.puts %Q{-GPSLatitudeRef=#{gps_latitude_ref}}
             end
-            
+
             gps_longitude = gps_created[:gps_longitude]||""
             gps_longitude_ref = gps_created[:gps_longitude_ref]||""
             if not gps_longitude.empty? and not gps_longitude_ref.empty?
-              f.puts %Q{-GPSLongitude="#{gps_longitude}"}      
+              f.puts %Q{-GPSLongitude="#{gps_longitude}"}
               f.puts %Q{-GPSLongitudeRef=#{gps_longitude_ref}}
             end
-              
+
             gps_altitude = gps_created[:gps_altitude].to_f||0.0
             gps_altitude_ref = gps_created[:gps_altitude_ref]||""
             if not gps_altitude_ref.empty?
               f.puts %Q{-GPSAltitude=#{gps_altitude}}
               f.puts %Q{-GPSAltitudeRef=#{gps_altitude_ref}}
             end
-          end 
+          end
 
           # collection_name and XPSubject
           collection_name = opts[:collection_name]||""
-          f.puts %Q{-XMP:CollectionName-=#{collection_name}}        
-          f.puts %Q{-XMP:CollectionName+=#{collection_name}} 
+          f.puts %Q{-XMP:CollectionName-=#{collection_name}}
+          f.puts %Q{-XMP:CollectionName+=#{collection_name}}
           #f.puts %Q{-XPSubject=#{collection_name}} #ANB does not work ok in Windows
 
           # collection_uri
           collection_uri = opts[:collection_uri]||""
-          f.puts %Q{-XMP:CollectionURI-=#{collection_uri}}        
-          f.puts %Q{-XMP:CollectionURI+=#{collection_uri}} 
+          f.puts %Q{-XMP:CollectionURI-=#{collection_uri}}
+          f.puts %Q{-XMP:CollectionURI+=#{collection_uri}}
 
           # image_unique_id
-          f.puts %Q{-ImageUniqueID=#{foto.image_unique_id}}        
+          f.puts %Q{-ImageUniqueID=#{foto.image_unique_id}}
 
           #General
           f.puts %Q{-v}
 
           #FIXME put UTF8 only if any IPTC tag exist to avoid creating IPTC group from scratch
           f.puts %Q{-IPTC:CodedCharacterSet=UTF8}
-          
+
           f.puts %Q{-EXIF:ModifyDate=now}
 
           f.puts %Q{-P}
@@ -659,7 +657,7 @@ class FotoObject
           f.puts %Q{-ignoreMinorErrors}
 
           f.puts %Q{#{foto.name+foto.extention}}
-          f.puts %Q{-execute} 
+          f.puts %Q{-execute}
           f.puts
         else
           $log.info "Skipping #{foto.name+foto.extention} due to errors(#{foto.errors.size}) found before"
@@ -684,14 +682,14 @@ class FotoObject
     collection_real_size = self.collection_real_size
     if collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     llog = ANBLogger.new(@@llog_filename)
 
     # generate exiftool command
     script_name = "#{__method__}.txt"
     args = ["-@", script_name]
-     
+
     # generate ARGFILE for exiftool
     total = 0
     File.open(script_name, "w+:utf-8") do |f|
@@ -702,14 +700,14 @@ class FotoObject
           total += 1
           $log.info "Adding #{foto.name+foto.extention} to script"
           f.puts %Q{# #{total}}
-          
+
           #General
           f.puts %Q{-v}
           f.puts %Q{-overwrite_original}
           f.puts %Q{-DateTimeOriginal>FileModifyDate}
           f.puts %Q{-ignoreMinorErrors}
           f.puts %Q{#{foto.name+foto.extention}}
-          f.puts %Q{-execute} 
+          f.puts %Q{-execute}
           f.puts
         else
           $log.info "Skipping #{foto.name+foto.extention} due to errors(#{foto.errors.size}) found before"
@@ -733,7 +731,7 @@ class FotoObject
     $log.info "*** Processing txt files in #{dir}"
     if self.collection_real_size <= 0
       msg = "*** #{__method__}: Nothing to process"; $log.warn msg
-      return   
+      return
     end
     # build find_and_replace array
     replace_data = []
@@ -742,9 +740,9 @@ class FotoObject
         name_old = File.basename(item.filename_original)
         name_new = item.name_ext
         replace_data << [name_old, name_new]
-      end  
+      end
     end
-    
+
     Dir.glob(file_list, File::FNM_CASEFOLD) do |file_in|
       $log.info "Processing #{file_in}"
       # backup
@@ -759,8 +757,8 @@ class FotoObject
       begin
         str = File.read(file_in)
         file_out = File.join(dir_target, file_in)
-        
-        pbar = ProgressBar.new("#{file_in}", replace_data.count)     
+
+        pbar = ProgressBar.new("#{file_in}", replace_data.count)
         replace_data.each do |item|
           str2find = item[0]||""
           str2replace = item[1]||""
@@ -774,20 +772,20 @@ class FotoObject
         msg = e.full_message("#{__method__} - fail to process #{file_in};"); $log.error msg
       else
         $log.info "   Processed Ok"
-      end           
+      end
     end #glob
   end #batch_process_txt_files
-      
+
   # Instance attributes and methods
   attr_reader :filename, :filename_original, :metadata
   attr_reader :name, :name_target, :extention
-  attr_reader :date_time_original, :dto_need2set 
+  attr_reader :date_time_original, :dto_need2set
   attr_accessor :errors, :metadata_conflicts, :audio_name, :audio_extention
   attr_reader :backed_up, :id36, :image_unique_id, :date_time_initialized, :author_nickname
-  
+
   # Class constructor
   def initialize filename, event
-    raise Error, "- #{filename} does not exist;" unless File.exist?(filename) 
+    raise Error, "- #{filename} does not exist;" unless File.exist?(filename)
     @errors = []
     @metadata_conflicts = [] #:creator :copyright :keywords :location_created :gps_created :collection_name :collection_uri
     @backed_up = false
@@ -798,19 +796,19 @@ class FotoObject
     @filename = File.expand_path filename
     @filename_original = @filename
 
-    @@id.next    
+    @@id.next
     @id36 = @@id.counter36
-    
+
     @image_unique_id = "#{@@id.date_init.strftime('%Y%m%d')}-#{@id36.rjust(7,'0')}"
     @author_nikname = event.author_nikname
-    
+
     # read exif info
     @date_time_original = DateTime.civil #zero date
-    begin 
+    begin
       exif = MiniExiftool.new filename, :timestamps => DateTime #, :convert_encoding => true
       @date_time_original = exif.date_time_original||false
       @metadata = exif.to_hash
-      
+
       @dto_need2set = false
       unless @date_time_original
         if event.force_set_dto
@@ -819,13 +817,13 @@ class FotoObject
           @date_time_original = @@current_dto2set
           @@current_dto2set += event.delta_dto*(1.0/86400) #in seconds
           $log.info "    date_time_original is forced to #{@date_time_original}"
-        else  
+        else
           raise Error, "- date_time_original = 00.00.00"
-        end   
+        end
       end
-      
+
       raise Error, "- date_time_original NOT in event dates;" unless (@date_time_original >= event.date_start) and (@date_time_original <= event.date_end)
-       
+
       # generate names
       @name_target = generate_target_name(name_suffix: event.name_suffix_template, name_id: event.name_id_template)
 
@@ -860,20 +858,20 @@ class FotoObject
       #puts %Q{GPSLongitude=#{exif.GPSLongitude}}
       val = exif.GPSLatitude||exif.GPSLongitude||""
       add_metadata_conflict("   #{name_ext} has value in tag ", :gps_created,
-          [%Q{GPSLatitude=#{exif.GPSLatitude}}, %Q{GPSLongitude=#{exif.GPSLongitude}}]    
+          [%Q{GPSLatitude=#{exif.GPSLatitude}}, %Q{GPSLongitude=#{exif.GPSLongitude}}]
           ) unless val.empty?
 
       #TODO check :collection_name :collection_uri
 
     rescue MiniExiftool::Error => e
-      #add_error e.full_message(name_ext)      
-      add_error e.full_message(name_ext)      
+      #add_error e.full_message(name_ext)
+      add_error e.full_message(name_ext)
     rescue Error => e
-      add_error e.full_message(name_ext)      
+      add_error e.full_message(name_ext)
     rescue StandardError => e
       add_error e.full_message(name_ext)
     end
-    
+
     @@collection << self
   end #initialize
 
@@ -894,10 +892,10 @@ class FotoObject
       if not @audio_name.nil?
         afilename_backup = File.join(dir_backup, @audio_name+@audio_extention)
         FileUtils.cp(@audio_name+@audio_extention, afilename_backup)
-      end      
+      end
     rescue StandardError => e
-      add_error e.full_message(name_ext) 
-      @backed_up = false 
+      add_error e.full_message(name_ext)
+      @backed_up = false
     else
       @backed_up = true
     end
@@ -907,7 +905,7 @@ class FotoObject
   # foto rename to target
   def move_to dir=nil
     return false if dir.nil?
-    
+
     filename_target = File.join(dir, @name_target+@extention)
     return true if filename_target == @filename # already moved
 
@@ -917,37 +915,37 @@ class FotoObject
       if not @audio_name.nil?
         afilename_target = File.join(dir, @name_target+@audio_extention)
         FileUtils.mv(@audio_name+@audio_extention, afilename_target)
-      end  
-      
+      end
+
     rescue StandardError => e
-      add_error e.full_message(name_ext) 
-      return false 
+      add_error e.full_message(name_ext)
+      return false
     else
       @filename = filename_target
       @name = @name_target
       @audio_name = @name_target if not @audio_name.nil?
       return true
     end
-  end  
+  end
 
-  # register error 
+  # register error
   def add_error message
     $log.error message
     @@errors_occured = true
     @errors << message
-  end  
+  end
 
-  # register metadata_conflict 
+  # register metadata_conflict
   def add_metadata_conflict message, metadata_name, metadata_values=[]
     $log.warn %Q{#{message} #{metadata_name}}
     $log.info %Q{      Values: #{metadata_values.inspect}}
     @@metadata_conflicts_occured = true
     @metadata_conflicts << metadata_name
-  end  
-    
+  end
+
   private
   # generate target name in YYYYmmdd-HHMMSS_AAA[ID]_nameclean
-  # To change if you have another name template 
+  # To change if you have another name template
   def generate_target_name template={name_suffix: "", name_id: ""}
 
     name_prefix = %Q{#{@date_time_original.strftime('%Y%m%d-%H%M%S')}_#{@author_nikname}}
@@ -958,14 +956,14 @@ class FotoObject
     end
     # check if file already renamed to old YYYYMMDD-hhmm_AAA[AAA] format
     if (/^(\d{8}-\d{4}_\w{3,6}_)(.*)/ =~ @name)
-      name = $2      
-    elsif (/^(\d{8}-\d{4}-\w{3,6}_)(.*)/ =~ @name)
-      name = $2      
-    # check if file already renamed in YYYYMMDD-hhmm format                 
-    elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name) 
       name = $2
-    # check if file already renamed in YYYYMMDD_name format                 
-    elsif (/^(\d{8}_)(.*)/ =~ @name) 
+    elsif (/^(\d{8}-\d{4}-\w{3,6}_)(.*)/ =~ @name)
+      name = $2
+    # check if file already renamed in YYYYMMDD-hhmm format
+    elsif (/^(\d{8}-\d{4}_)(.*)/ =~ @name)
+      name = $2
+    # check if file already renamed in YYYYMMDD_name format
+    elsif (/^(\d{8}_)(.*)/ =~ @name)
       name = $2
     # for all others just rename
     else
@@ -981,13 +979,12 @@ class FotoObject
 
     if template[:name_suffix].empty?
       suffix = "#{name}"
-    else    
+    else
       suffix = eval "\"#{template[:name_suffix]}\""
-    end   
+    end
 
-    name_prefix+name_id+suffix 
+    name_prefix+name_id+suffix
   end
-  
 end #FotoObject class
 
 # *** GLOBAL Constants and Variables ***

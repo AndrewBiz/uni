@@ -9,7 +9,6 @@ require "logger"
 require "fileutils"
 require_relative "mini_exiftool_fork" # gem install mini_exiftool (http://miniexiftool.rubyforge.org/)
 require_relative "progressbar" 
-#TODO optionparser
 
 # *** Standard Ruby class - anb alter ***
 class Exception
@@ -37,26 +36,22 @@ class ANBLogger < Logger
     end
 
     case severity
-  		#when WARN
-  		#	$stderr.puts "WARN: #{msg}"
-  		#	$stderr.puts	
-  		when ERROR
-  			$stderr.puts "ERROR: #{msg}"
-  			$stderr.puts	
-  		when FATAL
-  			$stderr.puts "FATAL: #{msg}"
-  			$stderr.puts
+      #when WARN
+      #	$stderr.puts "WARN: #{msg}"
+      #	$stderr.puts	
+    when ERROR
+      $stderr.puts "ERROR: #{msg}"
+      $stderr.puts	
+    when FATAL
+      $stderr.puts "FATAL: #{msg}"
+      $stderr.puts
     end
-  	
-  	super
-
-  end #add
-
+    super
+  end
 end  #Class ANBLogger
 
 # *** Read input params
-# TODO option_parser
-def read_input_params
+def read_input_params options_cli={}
   #utility sub
   def find_first_yaml_file(dir_to_process)
     Dir.chdir(dir_to_process)
@@ -69,12 +64,12 @@ def read_input_params
   end
 
   # read input args
-  dir_to_process = ARGV[0]||Dir.pwd
+  dir_to_process = Dir.pwd
   fail("#{dir_to_process} does not exist") unless File.exist?(dir_to_process) 
   fail("#{dir_to_process} is not a Directory") unless File.directory?(dir_to_process)
   $log.info "Dir to be processed: #{dir_to_process}"
   
-  yaml_name = ARGV[1]||find_first_yaml_file(dir_to_process)
+  yaml_name = options_cli['--event']||find_first_yaml_file(dir_to_process)
   fail("- no YAML File found;") if yaml_name.nil?  
   fail("- no YAML File found;") unless File.file?(yaml_name)
   $log.info "YAML Profile to be processed: #{yaml_name}"
@@ -82,7 +77,6 @@ def read_input_params
 end
 
 # !!! *** Input Parameters ***
-# TODO deprecate vs option parcer
 class Parameters
   # *** Exception class ***
   class FatalError < StandardError; end
@@ -139,7 +133,7 @@ class ANB_event
       :gps_longitude_ref => "", :gps_altitude => "", :gps_altitude_ref => "" }
   
   # Event initialize 
-  def initialize(yaml_name, dir_to_process=Dir.pwd)
+  def initialize(yaml_name, dir_to_process=Dir.pwd, options_cli)
     $log.info "*** Initializing event"
     # read script_options from profile
     begin
@@ -152,7 +146,7 @@ class ANB_event
 
     @title = @options[:event][:title].strip
     
-    # Event dates
+    # +Event dates
     begin 
       @date_start = DateTime.strptime(@options[:event][:date_start], $DateTimeFormat)
       @date_end = DateTime.strptime(@options[:event][:date_end], $DateTimeFormat)
@@ -165,7 +159,7 @@ class ANB_event
     
     @time_zone = @options[:event][:time_zone]||""
 
-    @author_nikname = @options[:event][:author_nikname]||""
+    @author_nikname = options_cli['--author']||@options[:event][:author_nikname]||""
     @creator = @options[:event][:creator]||[]
     
     @keywords = @options[:event][:keywords]||[]
@@ -679,7 +673,8 @@ class ANB_exiftool
     raise Error, "- #{filename} does not exist;" unless File.exist?(filename) 
     @metadata = {}
     @errors = []
-    @metadata_conflicts = [] #:creator :copyright :keywords :location_created :gps_created :collection_name :collection_uri
+    @metadata_conflicts = [] #:creator :copyright :keywords
+    #:location_created :gps_created :collection_name :collection_uri
     @backed_up = false
     @extention = File.extname filename
     @name = File.basename filename, extention
